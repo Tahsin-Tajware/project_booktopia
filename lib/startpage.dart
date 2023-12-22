@@ -24,7 +24,7 @@ class _MyloginState extends State<Mylogin> {
           children: [
             SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.only(left: 105,top: 70),
+                padding: EdgeInsets.only(left: 83,top: 70),
                 child: Text('BOOKTOPIA',style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
               ),
             ),
@@ -39,9 +39,9 @@ class _MyloginState extends State<Mylogin> {
                   children: [
 
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children:[
-                         Text('"Discover books online. Welcome to you"',style: TextStyle(color: Colors.white70,fontSize: 18,fontWeight: FontWeight.w700),),
+                         Text('"Discover books online. Welcome to you"',style: TextStyle(color: Colors.white70,fontSize: 15.5,fontWeight: FontWeight.w700),),
                       ],
                     ),
                     SizedBox(
