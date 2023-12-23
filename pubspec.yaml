@@ -41,6 +41,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   animated_switch: ^0.0.2
   shared_preferences: ^2.0.9
+  marquee: ^2.0.6
 
 
 dev_dependencies:
@@ -96,6 +97,15 @@ flutter:
        - asset: assets/fonts/SF-Pro-Text-ThinItalic.otf
        - asset: assets/fonts/SF-Pro-Text-Ultralight.otf
 
+   - family: SF
+     fonts:
+       - asset: assets/fonts/Rubik.ttf
+   - family: S
+     fonts:
+       - asset: assets/fonts/Kalam.ttf
+   - family: St
+     fonts:
+       - asset: assets/fonts/r.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
