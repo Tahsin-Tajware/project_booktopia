@@ -60,7 +60,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/pic2.png'),
+          image: AssetImage('assets/log.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -69,20 +69,23 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(left: 70, top: 70),
-                child: Text(
-                  'Sign In',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w900,
-                    decoration: TextDecoration.underline,
-                    decorationThickness: 1.5,
-                  ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset('assets/logo.png',height: 240,width: 200,),
+                        SizedBox(width: 10),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
+
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -93,12 +96,12 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 75,
+                      height: 46,
                     ),
                     TextFormField(
                       controller: _usernameController,
                       decoration: InputDecoration(
-                        fillColor: Colors.white70,
+                        fillColor: Colors.grey.shade200,
                         filled: true,
                         hintText: 'Username',
                         border: OutlineInputBorder(
@@ -107,13 +110,13 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 25,
+                      height: 20,
                     ),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        fillColor: Colors.white70,
+                        fillColor: Colors.grey.shade200,
                         filled: true,
                         hintText: 'Password',
                         suffixIcon: Icon(Icons.visibility_off),
@@ -144,16 +147,17 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                             'Forgot Password ?',
                             style: TextStyle(
                               decoration: TextDecoration.underline,
+                              decorationThickness: 0.8,
                               color: Colors.red,
                               fontSize: 15,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -164,16 +168,17 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
 
                           },
                           child: const Text(
-                            'Continue',
+                            'Sign In',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 35,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(Size(240, 50)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            minimumSize: MaterialStateProperty.all(Size(250, 60)),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.cyanAccent.shade200),
                           ),
                         ),
                       ],
@@ -183,14 +188,22 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton.icon(
+                          FilledButton.icon(
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             icon: Icon(Icons.arrow_back),
-                            label: Text('Back'),
+                            label: Text(
+                              'Back',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white30),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white70),
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                             ),
                           ),
                         ],
