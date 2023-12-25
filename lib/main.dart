@@ -1,9 +1,12 @@
 import 'package:booktopia/signup.dart';
+import 'package:booktopia/firebase_options.dart';
 import 'package:booktopia/startpage.dart';
 import 'package:booktopia/view/main_tab/main_tab_view.dart';
 import 'package:flutter/material.dart';
 import 'common/color_extension.dart';
 import 'login.dart';
+
+
 
 void main() {
   runApp(MaterialApp(

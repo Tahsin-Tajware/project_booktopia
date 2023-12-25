@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "609577257326",
+    "project_id": "booktopia-cc96f",
+    "storage_bucket": "booktopia-cc96f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:609577257326:android:8d0df288afcd549e3d597f",
+        "android_client_info": {
+          "package_name": "com.example.project_booktopia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "609577257326-otrb0dh0ig2q31766bc706qpq8lms4ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwM9vR43QD7LwEJRmylKHzFKL6f0vrITc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "609577257326-otrb0dh0ig2q31766bc706qpq8lms4ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
