@@ -17,10 +17,10 @@ class TopPicksCell extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
-                  boxShadow: const [
+          decoration: BoxDecoration(
+          boxShadow: const [
                     BoxShadow(
                         color: Colors.black38,
                         offset: Offset(0, 2),
