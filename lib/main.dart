@@ -12,7 +12,7 @@ void main() {
   runApp(MaterialApp(
     theme: ThemeData(
       primaryColor: TColor.primary,
-      fontFamily: 'Oswald',
+      fontFamily: 'SF Pro Text',
 
     ),
     debugShowCheckedModeBanner: false,
