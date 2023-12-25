@@ -165,7 +165,6 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                         FilledButton(
                           onPressed: () async {
                             await _authenticateUser();
-
                           },
                           child: const Text(
                             'Sign In',
