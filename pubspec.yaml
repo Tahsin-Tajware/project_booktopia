@@ -84,18 +84,18 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+   - family: Oswald
+     fonts:
+       - asset: assets/fonts/Oswald-Bold.ttf
+       - asset: assets/fonts/Oswald-ExtraLight.ttf
+       - asset: assets/fonts/Oswald-Light.ttf
+       - asset: assets/fonts/Oswald-Medium.ttf
+       - asset: assets/fonts/Oswald-Regular.ttf
+       - asset: assets/fonts/Oswald-SemiBold.ttf
+
    - family: SF Pro Text
      fonts:
        - asset: assets/fonts/SF-Pro-Text-Black.otf
-       - asset: assets/fonts/SF-Pro-Text-Bold.otf
-       - asset: assets/fonts/SF-Pro-Text-Heavy.otf
-       - asset: assets/fonts/SF-Pro-Text-Light.otf
-       - asset: assets/fonts/SF-Pro-Text-Medium.otf
-       - asset: assets/fonts/SF-Pro-Text-Regular.otf
-       - asset: assets/fonts/SF-Pro-Text-Semibold.otf
-       - asset: assets/fonts/SF-Pro-Text-Thin.otf
-       - asset: assets/fonts/SF-Pro-Text-ThinItalic.otf
-       - asset: assets/fonts/SF-Pro-Text-Ultralight.otf
 
    - family: SF
      fonts:

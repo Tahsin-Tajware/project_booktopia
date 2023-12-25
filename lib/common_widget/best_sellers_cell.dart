@@ -25,7 +25,7 @@ class BestSellersCell extends StatelessWidget {
                     boxShadow: const [
                       BoxShadow(
                           color: Colors.black38,
-                          offset: Offset(0, 2),
+                          offset: Offset(0, 6),
                           blurRadius: 5)
                     ]),
                 child: ClipRRect(
@@ -51,7 +51,7 @@ class BestSellersCell extends StatelessWidget {
                     fontWeight: FontWeight.w700),
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               Text(
                 bObj["author"].toString(),
@@ -76,8 +76,8 @@ class BestSellersCell extends StatelessWidget {
                     itemSize: 15,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                     itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.blue,
+                      Icons.star_rate_sharp,
+                      color: Colors.deepOrange,
                     ),
                     onRatingUpdate: (rating) {
 

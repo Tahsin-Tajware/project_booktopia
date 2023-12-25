@@ -34,8 +34,8 @@ class _MainTabViewState extends State<MainTabView>
         child: TabBar(
             controller: controller,
             indicatorColor: Colors.transparent,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white,
+            labelColor: Colors.white70,
+            unselectedLabelColor: Colors.white70,
             tabs: const [
               Tab(
                 icon: Icon(Icons.home),
