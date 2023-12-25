@@ -17,83 +17,38 @@ class _HomeViewState extends State<HomeView> {
     {
       "name": "HARRY POTTER and the SORCERER'S STONE",
       "author": "J.K. Rowling",
-      "img": "assets/1.jpeg"
+      "img": "assets/1.jpg"
     },
     {
       "name": "The Name of the Wind",
       "author": "Patrick Rothfuss",
-      "img": "assets/2.jpeg"
+      "img": "assets/2.jpg"
     },
     {
       "name": "The Way of Kings",
       "author": "Brandon Sanderson",
-      "img": "assets/3.jpeg"
-    },
-    {
-      "name": "The Wicked King",
-      "author": "Holly Black",
-      "img": "assets/4.jpeg"
-    },
-    {
-      "name": "The Martian",
-      "author": "Andy Weir",
-      "img": "assets/5.jpeg"
-    },
-    {
-      "name": "The Will of the Many",
-      "author": "James Islington",
-      "img": "assets/6.jpeg"
-    },
-    {
-      "name": "Of Darkness and Light",
-      "author": "Ryan Cahill",
-      "img": "assets/7.jpeg"
+      "img": "assets/3.jpg"
     }
-
   ];
 
   List bestSellerArr = [
     {
       "name": "The Invisible Life of Addie LaRue",
       "author": "V.E. Schwab",
-      "img": "assets/_1.jpeg",
+      "img": "assets/4.jpg",
       "rating": 4.5
     },
     {
       "name": "The Wager: A Tale of Shipwreck, Mutiny and Murder",
       "author": "David Grann",
-      "img": "assets/_2.jpeg",
+      "img": "assets/5.jpg",
       "rating": 4.5
     },
     {
-      "name": "The Covenant of Water",
+      "name": "The Covenant of Water ",
       "author": "Abraham Verghese",
-      "img": "assets/_3.jpeg",
+      "img": "assets/6.jpg",
       "rating": 4.6
-    },
-    {
-      "name": "1932: FDR,Hoover,and the Dawn of a New America",
-      "author": "Scott Martelle",
-      "img": "assets/_4.jpg",
-      "rating": 4.8
-    },
-    {
-      "name": "The Redhead of Auschwitz: A True Story ",
-      "author": "Nechama Birnbaum",
-      "img": "assets/_5.jpg",
-      "rating": 4.8
-    },
-    {
-      "name": "Ward D",
-      "author": "Freida McFadden",
-      "img": "assets/_6.jpg",
-      "rating": 4.3
-    },
-    {
-      "name": "Burned Out",
-      "author": "Dean Mafako",
-      "img": "assets/_7.jpg",
-      "rating": 4.3
     }
   ];
 
@@ -133,11 +88,11 @@ class _HomeViewState extends State<HomeView> {
                     AppBar(
                       backgroundColor: TColor.text,
                       elevation: 0,
-                      title: Row(children: [
+                      title: Row(children: const [
                         Text(
-                          "Trending Books",
+                          "Our Top Picks",
                           style: TextStyle(
-                              color: Colors.white70,
+                              color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.w800),
                         ),
@@ -146,7 +101,7 @@ class _HomeViewState extends State<HomeView> {
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                            color: Colors.white70,
+                            color: Colors.white,
                             onPressed: () {},
                             icon: const Icon(Icons.menu))
                       ],
@@ -187,9 +142,9 @@ class _HomeViewState extends State<HomeView> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(children: [
                         Text(
-                          "Available Books",
+                          "Bestsellers",
                           style: TextStyle(
-                              color: Colors.black87,
+                              color: Colors.black,
                               fontSize: 25,
                               fontWeight: FontWeight.w800),
                         ),

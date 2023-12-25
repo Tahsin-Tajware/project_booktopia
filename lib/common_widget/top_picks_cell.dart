@@ -48,9 +48,6 @@ class TopPicksCell extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.w700),
             ),
-            const SizedBox(
-              height: 8,
-            ),
             Text(
               iObj["author"].toString(),
               maxLines: 2,
