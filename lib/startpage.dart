@@ -1,5 +1,15 @@
+import 'package:booktopia/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:animated_switch/animated_switch.dart';
+import 'package:booktopia/google.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(Mylogin());
+}
+
 
 class Mylogin extends StatefulWidget {
   const Mylogin({super.key});
@@ -9,6 +19,18 @@ class Mylogin extends StatefulWidget {
 }
 
 class _MyloginState extends State<Mylogin> {
+  bool _isTextVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+        _isTextVisible = true;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +45,14 @@ class _MyloginState extends State<Mylogin> {
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(left: 83,top: 70),
-                child: Text('BOOKTOPIA',style: TextStyle(color: Colors.white,fontSize: 40,fontWeight: FontWeight.bold),),
+              child: Center(
+                child: Container(
+                  padding: EdgeInsets.only(top: 70),
+                  child: Text(
+                    'BOOKTOPIA',
+                    style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold, fontFamily: 'SF'),
+                  ),
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -37,16 +64,29 @@ class _MyloginState extends State<Mylogin> {
                 ),
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    AnimatedOpacity(
+                      opacity: _isTextVisible ? 1.0 : 1.0,
+                      duration: Duration(milliseconds: 1500),
+                      child: AnimatedDefaultTextStyle(
+                        duration: Duration(milliseconds: 1700),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: _isTextVisible ? 17.5 : 0.0,
+                          fontWeight: FontWeight.w900,
+                        ),
+                        child: Text(
+                          '" Discover books online. Welcome to you. "',
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children:[
-                         Text('"Discover books online. Welcome to you"',style: TextStyle(color: Colors.white70,fontSize: 15.5,fontWeight: FontWeight.w700),),
-                      ],
+                        ),
+                      ),
                     ),
                     SizedBox(
-                      height: 150,
+                      height: 90,
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -58,13 +98,13 @@ class _MyloginState extends State<Mylogin> {
                             'Sign In',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 35,
+                              fontWeight: FontWeight.w900,fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(Size(250, 70)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue.shade300),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.cyanAccent),
                           ),
                         ),
                       ],
@@ -81,15 +121,68 @@ class _MyloginState extends State<Mylogin> {
                             'Sign Up',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 35,
+                              fontWeight: FontWeight.w900,fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
                             minimumSize: MaterialStateProperty.all(Size(250, 70)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue.shade100),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
                           ),
                         ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 70),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: Text(
+                              'Or',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 2,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SquareTile(
+                            onTap:() {
+                              //Navigator.pushNamed(context, 'home');
+                            },
+                            imagePath: 'assets/otp.png'),
+                        SizedBox(
+                            width: 30
+                        ),
+                        SquareTile(
+                            onTap:() =>AuthService().signInWithGoogle(context),
+                            imagePath: 'assets/google.png'
+                        ),
+                        SizedBox(
+                            width: 30
+                        ),
+                          SquareTile(
+                              onTap:() {
+                              },
+                              imagePath: 'assets/apple.png'),
                       ],
                     ),
                   ],

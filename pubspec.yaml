@@ -41,6 +41,12 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   animated_switch: ^0.0.2
   shared_preferences: ^2.0.9
+  marquee: ^2.0.6
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.5.0
+  cloud_firestore: ^4.13.6
+  provider: ^6.1.1
+  google_sign_in: ^5.4.2
 
 
 dev_dependencies:
@@ -83,19 +89,28 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-   - family: SF Pro Text
-     fonts:
-       - asset: assets/fonts/SF-Pro-Text-Black.otf
-       - asset: assets/fonts/SF-Pro-Text-Bold.otf
-       - asset: assets/fonts/SF-Pro-Text-Heavy.otf
-       - asset: assets/fonts/SF-Pro-Text-Light.otf
-       - asset: assets/fonts/SF-Pro-Text-Medium.otf
-       - asset: assets/fonts/SF-Pro-Text-Regular.otf
-       - asset: assets/fonts/SF-Pro-Text-Semibold.otf
-       - asset: assets/fonts/SF-Pro-Text-Thin.otf
-       - asset: assets/fonts/SF-Pro-Text-ThinItalic.otf
-       - asset: assets/fonts/SF-Pro-Text-Ultralight.otf
+    - family: SF Pro Text
+      fonts:
+        - asset: assets/fonts/SF-Pro-Text-Black.otf
+        - asset: assets/fonts/SF-Pro-Text-Bold.otf
+        - asset: assets/fonts/SF-Pro-Text-Heavy.otf
+        - asset: assets/fonts/SF-Pro-Text-Light.otf
+        - asset: assets/fonts/SF-Pro-Text-Medium.otf
+        - asset: assets/fonts/SF-Pro-Text-Regular.otf
+        - asset: assets/fonts/SF-Pro-Text-Semibold.otf
+        - asset: assets/fonts/SF-Pro-Text-Thin.otf
+        - asset: assets/fonts/SF-Pro-Text-ThinItalic.otf
+        - asset: assets/fonts/SF-Pro-Text-Ultralight.otf
 
+    - family: SF
+      fonts:
+        - asset: assets/fonts/Rubik.ttf
+    - family: S
+      fonts:
+        - asset: assets/fonts/Kalam.ttf
+    - family: St
+      fonts:
+        - asset: assets/fonts/r.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

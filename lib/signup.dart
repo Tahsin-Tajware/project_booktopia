@@ -52,17 +52,24 @@ class _SignupScreenState extends State<SignupScreen> {
         body: Stack(
           children: [
             SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(left: 150, top: 60),
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 40,
-                    fontWeight: FontWeight.w900,
-                    decoration: TextDecoration.underline,
-                    decorationThickness: 1.5,
-                  ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 45),
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 50,
+                          fontWeight: FontWeight.w900,
+                          fontFamily: 'St',
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -140,7 +147,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ElevatedButton(
+                       FilledButton(
                           onPressed: () async {
                             await _storeUserData();
                             Navigator.pushNamed(context, 'login');
@@ -148,14 +155,15 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: const Text(
                             'Sign Up',
                             style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(Size(240, 50)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue.shade400),
+                            minimumSize: MaterialStateProperty.all(Size(270, 60)),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.cyanAccent),
                           ),
                         ),
                       ],
@@ -165,14 +173,22 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          ElevatedButton.icon(
+                          FilledButton.icon(
                             onPressed: () {
                               Navigator.pop(context);
                             },
                             icon: Icon(Icons.arrow_back),
-                            label: Text('Back'),
+                            label: Text(
+                              'Back',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white30),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white70),
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
                             ),
                           ),
                         ],
