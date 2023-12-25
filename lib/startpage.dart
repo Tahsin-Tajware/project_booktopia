@@ -1,6 +1,15 @@
+import 'package:booktopia/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:booktopia/google.dart';
-import 'package:animated_switch/animated_switch.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+Future main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(Mylogin());
+}
+
 
 class Mylogin extends StatefulWidget {
   const Mylogin({super.key});
@@ -152,18 +161,28 @@ class _MyloginState extends State<Mylogin> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SquareTile(imagePath: 'assets/otp.png'),
+                        SquareTile(
+                            onTap:() {
+                              //Navigator.pushNamed(context, 'home');
+                            },
+                            imagePath: 'assets/otp.png'),
                         SizedBox(
-                            width: 20
+                            width: 30
                         ),
-                        SquareTile(imagePath: 'assets/google.png'),
+                        SquareTile(
+                            onTap:() =>AuthService().signInWithGoogle(context),
+                            imagePath: 'assets/google.png'
+                        ),
                         SizedBox(
-                            width: 20
+                            width: 30
                         ),
-                        SquareTile(imagePath: 'assets/apple.png')
+                          SquareTile(
+                              onTap:() {
+                              },
+                              imagePath: 'assets/apple.png'),
                       ],
                     ),
                   ],
