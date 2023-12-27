@@ -1,9 +1,9 @@
 import 'package:booktopia/common/color_extension.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../../common_widget/best_sellers_cell.dart';
 import '../../common_widget/top_picks_cell.dart';
+import '../main_tab/menubar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -102,7 +102,9 @@ class _HomeViewState extends State<HomeView> {
                       actions: [
                         IconButton(
                             color: Colors.white,
-                            onPressed: () {},
+                            onPressed: () {
+                              sideMenuScafflodKey.currentState?.openEndDrawer();
+                            },
                             icon: const Icon(Icons.menu))
                       ],
                     ),
