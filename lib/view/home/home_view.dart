@@ -28,7 +28,28 @@ class _HomeViewState extends State<HomeView> {
       "name": "The Way of Kings",
       "author": "Brandon Sanderson",
       "img": "assets/3.jpg"
+    },
+    {
+      "name": "The Wicked King",
+      "author": "Holly Black",
+      "img": "assets/7 .jpg"
+    },
+    {
+      "name": "The Martian",
+      "author": "Andy Weir",
+      "img": "assets/8.jpg"
+    },
+    {
+      "name": "The Will of the Many",
+      "author": "James Islington",
+      "img": "assets/9.jpg"
+    },
+    {
+      "name": "Of Darkness and Light",
+      "author": "Ryan Cahill",
+      "img": "assets/10.jpg"
     }
+
   ];
 
   List bestSellerArr = [
@@ -49,6 +70,30 @@ class _HomeViewState extends State<HomeView> {
       "author": "Abraham Verghese",
       "img": "assets/6.jpg",
       "rating": 4.6
+    },
+    {
+      "name": "1932: FDR,Hoover,and the Dawn of a New America",
+      "author": "Scott Martelle",
+      "img": "assets/11.jpg",
+      "rating": 4.8
+    },
+    {
+      "name": "The Redhead of Auschwitz: A True Story ",
+      "author": "Nechama Birnbaum",
+      "img": "assets/12.jpg",
+      "rating": 4.8
+    },
+    {
+      "name": "Ward D",
+      "author": "Freida McFadden",
+      "img": "assets/13.jpg",
+      "rating": 4.3
+    },
+    {
+      "name": "Burned Out",
+      "author": "Dean Mafako",
+      "img": "assets/14.jpg",
+      "rating": 4.3
     }
   ];
 
@@ -90,7 +135,7 @@ class _HomeViewState extends State<HomeView> {
                       elevation: 0,
                       title: Row(children: const [
                         Text(
-                          "Our Top Picks",
+                          "Trending Books",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 25,
@@ -142,7 +187,7 @@ class _HomeViewState extends State<HomeView> {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(children: [
                         Text(
-                          "Bestsellers",
+                          "Available Books",
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
