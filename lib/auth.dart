@@ -18,21 +18,24 @@ class AuthService {
         idToken: gAuth.idToken,
       );
       final UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithCredential(credential);
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
       if (userCredential.user != null) {
         Navigator.pushNamed(context, 'home');
+        return userCredential;
       }
-      return userCredential;
     } catch (e) {
       print("Error signing in with Google: $e");
+
+      // Show an error dialog to the user with specific error message
       String errorMessage = 'Failed to sign in with Google.';
       if (e is FirebaseAuthException) {
         errorMessage = e.message ?? 'An error occurred.';
         print("FirebaseAuthException: ${e.code} - ${e.message}");
+        errorMessage = "Firebase Error: ${e.code}";
       } else {
         print("Unexpected Error: $e");
       }
-
       showDialog(
         context: context,
         builder: (BuildContext dialogContext) {
@@ -50,8 +53,7 @@ class AuthService {
           );
         },
       );
-
-      return null;
     }
+    return null;
   }
 }

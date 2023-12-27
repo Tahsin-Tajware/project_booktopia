@@ -35,11 +35,11 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
     final enteredUsername = _usernameController.text;
     final enteredPassword = _passwordController.text;
 
-    if (storedUsername == enteredUsername && storedPassword == enteredPassword) {
+    if (storedUsername == enteredUsername &&
+        storedPassword == enteredPassword) {
       print('Authentication successful!');
       Navigator.pushNamed(context, 'home');
-    }
-    else {
+    } else {
       print('Authentication failed!');
       _showErrorMessage();
     }
@@ -55,6 +55,7 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +78,11 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset('assets/logo.png',height: 240,width: 200,),
+                        Image.asset(
+                          'assets/logo.png',
+                          height: 240,
+                          width: 200,
+                        ),
                         SizedBox(width: 10),
                       ],
                     ),
@@ -85,7 +90,6 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 ),
               ),
             ),
-
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -125,7 +129,6 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                         ),
                       ),
                     ),
-
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -176,8 +179,10 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                             ),
                           ),
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(Size(250, 60)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.cyanAccent.shade200),
+                            minimumSize:
+                                MaterialStateProperty.all(Size(250, 60)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.cyanAccent.shade200),
                           ),
                         ),
                       ],
@@ -201,8 +206,10 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                               ),
                             ),
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white70),
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white70),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.black),
                             ),
                           ),
                         ],
