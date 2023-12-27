@@ -1,10 +1,13 @@
 import 'package:booktopia/common/color_extension.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../../common_widget/best_sellers_cell.dart';
 import '../../common_widget/top_picks_cell.dart';
+<<<<<<< HEAD
 import '../main_tab/main_tab_view.dart';
+=======
+import '../main_tab/menubar.dart';
+>>>>>>> 3ce760bec7c12fd738d3bdb667711766ec0c429b
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
