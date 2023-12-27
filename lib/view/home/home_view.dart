@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import '../../common_widget/best_sellers_cell.dart';
 import '../../common_widget/top_picks_cell.dart';
-import '../main_tab/main_tab_view.dart';
+import '../main_tab/menubar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
