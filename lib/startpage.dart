@@ -1,15 +1,15 @@
 import 'package:booktopia/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:booktopia/google.dart';
+import 'package:animated_switch/animated_switch.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-Future main() async{
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(Mylogin());
 }
-
 
 class Mylogin extends StatefulWidget {
   const Mylogin({super.key});
@@ -50,7 +50,11 @@ class _MyloginState extends State<Mylogin> {
                   padding: EdgeInsets.only(top: 70),
                   child: Text(
                     'BOOKTOPIA',
-                    style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold, fontFamily: 'SF'),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 45,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'SF'),
                   ),
                 ),
               ),
@@ -79,7 +83,6 @@ class _MyloginState extends State<Mylogin> {
                         ),
                         child: Text(
                           '" Discover books online. Welcome to you. "',
-
                         ),
                       ),
                     ),
@@ -99,12 +102,15 @@ class _MyloginState extends State<Mylogin> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 35,
-                              fontWeight: FontWeight.w900,fontFamily: 'S',
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(Size(250, 70)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.cyanAccent),
+                            minimumSize:
+                                MaterialStateProperty.all(Size(250, 70)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.cyanAccent),
                           ),
                         ),
                       ],
@@ -122,12 +128,15 @@ class _MyloginState extends State<Mylogin> {
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 35,
-                              fontWeight: FontWeight.w900,fontFamily: 'S',
+                              fontWeight: FontWeight.w900,
+                              fontFamily: 'S',
                             ),
                           ),
                           style: ButtonStyle(
-                            minimumSize: MaterialStateProperty.all(Size(250, 70)),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.lightBlue),
+                            minimumSize:
+                                MaterialStateProperty.all(Size(250, 70)),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.lightBlue),
                           ),
                         ),
                       ],
@@ -145,7 +154,8 @@ class _MyloginState extends State<Mylogin> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               'Or',
                               style: TextStyle(color: Colors.white),
@@ -165,24 +175,17 @@ class _MyloginState extends State<Mylogin> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SquareTile(
-                            onTap:() {
+                            onTap: () {
                               //Navigator.pushNamed(context, 'home');
                             },
                             imagePath: 'assets/otp.png'),
-                        SizedBox(
-                            width: 30
-                        ),
+                        SizedBox(width: 30),
                         SquareTile(
-                            onTap:() =>AuthService().signInWithGoogle(context),
-                            imagePath: 'assets/google.png'
-                        ),
-                        SizedBox(
-                            width: 30
-                        ),
-                          SquareTile(
-                              onTap:() {
-                              },
-                              imagePath: 'assets/apple.png'),
+                            onTap: () =>
+                                AuthService().signInWithGoogle(context),
+                            imagePath: 'assets/google.png'),
+                        SizedBox(width: 30),
+                        SquareTile(onTap: () {}, imagePath: 'assets/apple.png'),
                       ],
                     ),
                   ],
