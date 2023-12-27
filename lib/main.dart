@@ -1,16 +1,19 @@
 import 'package:booktopia/signup.dart';
+import 'package:booktopia/firebase_options.dart';
 import 'package:booktopia/startpage.dart';
-import 'package:booktopia/view/main_tab/main_tab_view.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:booktopia/view/main_tab/menubar.dart';
 import 'package:flutter/material.dart';
 import 'common/color_extension.dart';
 import 'login.dart';
+
+
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
       primaryColor: TColor.primary,
-      fontFamily: 'SF Pro Text',
+      fontFamily: 'Oswald',
+
     ),
     debugShowCheckedModeBanner: false,
     initialRoute: 'startpage',
