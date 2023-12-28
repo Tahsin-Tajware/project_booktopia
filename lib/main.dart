@@ -1,5 +1,5 @@
 import 'package:booktopia/signup.dart';
-import 'package:booktopia/firebase_options.dart';
+//import 'package:booktopia/firebase_options.dart';
 import 'package:booktopia/startpage.dart';
 import 'package:booktopia/view/main_tab/menubar.dart';
 import 'package:flutter/material.dart';
