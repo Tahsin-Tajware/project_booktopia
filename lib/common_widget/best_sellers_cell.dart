@@ -76,8 +76,8 @@ class BestSellersCell extends StatelessWidget {
                     itemSize: 15,
                     itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                     itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.blue,
+                      Icons.star_rate_sharp,
+                      color: Colors.deepOrange,
                     ),
                     onRatingUpdate: (rating) {
 
