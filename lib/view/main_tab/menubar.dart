@@ -1,9 +1,12 @@
 import 'package:booktopia/common/color_extension.dart';
 import 'package:booktopia/view/home/home_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import '../../login/login.dart';
 
 class MainTabView extends StatefulWidget {
-  const MainTabView({super.key});
+  const MainTabView( {super.key});
 
   @override
   State<MainTabView> createState() => _MainTabViewState();
@@ -14,9 +17,13 @@ GlobalKey<ScaffoldState> sideMenuScafflodKey = GlobalKey<ScaffoldState>();
 class _MainTabViewState extends State<MainTabView>
     with TickerProviderStateMixin {
   TabController? controller;
-
+  final currentUser = FirebaseAuth.instance;
   int selectMenu = 0;
-
+  Future<void> signout() async {
+    final GoogleSignIn googleSign = GoogleSignIn();
+    await googleSign.signOut();
+    FirebaseAuth.instance.signOut();
+  }
   List menuArr = [
     {"name": "Home", "icon": Icons.home},
     {"name": "My Account ", "icon": Icons.person},
@@ -68,11 +75,16 @@ class _MainTabViewState extends State<MainTabView>
                               offset: const Offset(0, 3))
                         ])
                             : null,
-                        child: GestureDetector(
+                        child:  GestureDetector(
                           onTap: () {
-                            setState(() {
-                              selectMenu = index;
-                            });
+                            signout();
+                            // Navigate to the login page when "Sign Out" is tapped
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(), // Replace LoginView with your login page
+                              ),
+                                  (Route<dynamic> route) => false,
+                            );
                           },
                           child: Row(
                             //mainAxisAlignment: MainAxisAlignment.end,
