@@ -1,28 +1,36 @@
-import 'package:booktopia/signup.dart';
 import 'package:booktopia/firebase_options.dart';
-import 'package:booktopia/startpage.dart';
-import 'package:booktopia/view/main_tab/main_tab_view.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'common/color_extension.dart';
-import 'login.dart';
+import 'login/login.dart';
+import 'login/splash.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
+  runApp(MyApp());
+}
 
-void main() {
-  runApp(MaterialApp(
-    theme: ThemeData(
-      primaryColor: TColor.primary,
-      fontFamily: 'Oswald',
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key});
 
-    ),
-    debugShowCheckedModeBanner: false,
-    initialRoute: 'startpage',
-    routes: {
-      'startpage': (context) => Mylogin(),
-      'login': (context) => MyLoginScreen(),
-      'signup': (context) => SignupScreen(),
-      'home': (context) => MainTabView(),
-    },
-    home: const MainTabView(),
-  ));
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'BookTopia',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          background: Colors.black, // Set the background color to black
+        ),
+        useMaterial3: true,
+      ),
+      home: SplashScreen(
+        child: LoginPage(),
+      ),
+    );
+  }
 }
