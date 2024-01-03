@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../../search_view.dart';
+
 class MainTabView extends StatefulWidget {
   const MainTabView({Key? key}) : super(key: key);
 
@@ -135,7 +137,8 @@ class _MainTabViewState extends State<MainTabView>
         },
         children: [
           const HomeView(),
-          Container(color: Colors.white24),
+          //Container(color: Colors.white24),
+          SearchPage(),
           Container(color: Colors.green),
           Container(color: Colors.orange),
         ],

@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../common/color_extension.dart';
-
 class SearchPage extends StatefulWidget {
   @override
   _SearchPageState createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController _controller = TextEditingController();
+  TextEditingController Textcontroller = TextEditingController();
 
   List<String> products = [
     "HARRY POTTER and the SORCERER'S STONE",
@@ -33,8 +31,10 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue.shade300,
       appBar: AppBar(
-        title: Text('Search Bar'),
+        backgroundColor: Colors.transparent,
+        title: Text('Which book you want to find?'),
       ),
       body: Column(
         children: [
@@ -46,12 +46,20 @@ class _SearchPageState extends State<SearchPage> {
                 search(value);
               },
               decoration: InputDecoration(
-                contentPadding:
-                const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                prefixIcon: Icon(Icons.search, color: TColor.text),
+                contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue.shade900, width: 3.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.grey.shade900, width: 3.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red, width: 3.0),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                prefixIcon: Icon(Icons.search, color: Colors.black),
                 suffixIcon: SizedBox(width: 40),
                 hintText: 'Search Books',
               ),
@@ -87,8 +95,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   void navigateToProductPage(int index) {
-    // Replace this with your actual navigation logic
-    // For example, you can use Navigator.push to navigate to a new page
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -108,10 +114,17 @@ class ProductDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
         title: Text('Product Details'),
       ),
-      body: Center(
-        child: Text('Details for $productName'),
+      body: Container(
+        color: Colors.grey.shade200,
+        child: Center(
+          child: Text(
+            'Details for $productName',
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
       ),
     );
   }
