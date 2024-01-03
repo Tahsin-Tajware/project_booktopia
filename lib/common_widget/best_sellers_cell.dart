@@ -33,7 +33,7 @@ class BestSellersCell extends StatelessWidget {
                   child: Image.asset(
                     bObj["img"].toString(),
                     width: media.width * 0.45,
-                    height: media.width * 0.55,
+                    height: 200,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -68,7 +68,8 @@ class BestSellersCell extends StatelessWidget {
               IgnorePointer(
                   ignoring: true,
                   child: RatingBar.builder(
-                    initialRating: double.tryParse( bObj["rating"].toString())?? 1,
+                    initialRating:
+                        double.tryParse(bObj["rating"].toString()) ?? 1,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
@@ -79,9 +80,7 @@ class BestSellersCell extends StatelessWidget {
                       Icons.star_rate_sharp,
                       color: Colors.deepOrange,
                     ),
-                    onRatingUpdate: (rating) {
-
-                    },
+                    onRatingUpdate: (rating) {},
                   ))
             ],
           )),
