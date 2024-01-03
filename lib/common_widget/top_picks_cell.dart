@@ -1,6 +1,6 @@
 import 'package:booktopia/common/color_extension.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TopPicksCell extends StatelessWidget {
   final Map iObj;
@@ -31,7 +31,7 @@ class TopPicksCell extends StatelessWidget {
                 child: Image.asset(
                   iObj["img"].toString(),
                   width: media.width * 0.3425,
-                  height: media.width * 0.55,
+                  height: 200,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -57,6 +57,26 @@ class TopPicksCell extends StatelessWidget {
                   fontSize: 13,
                   fontWeight: FontWeight.w700),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            IgnorePointer(
+                ignoring: true,
+                child: RatingBar.builder(
+                  initialRating:
+                      double.tryParse(iObj["rating"].toString()) ?? 1,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 15,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star_rate_sharp,
+                    color: Colors.deepOrange,
+                  ),
+                  onRatingUpdate: (rating) {},
+                ))
           ],
         ));
   }
