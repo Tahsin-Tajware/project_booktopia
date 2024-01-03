@@ -100,7 +100,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey[350],
+      backgroundColor: Colors.blue.shade600,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,13 +110,27 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 Align(
                   child: Transform.scale(
-                    scale: 1.7,
-                    origin: Offset(0, media.width * 0.8),
+                    scale: .5,
+                    origin: Offset(0, media.width * 0.6),
                     child: Container(
                       width: media.width,
                       height: media.width,
                       decoration: BoxDecoration(
-                          color: TColor.text,
+                          color: Colors.lightBlueAccent.shade400,
+                          borderRadius:
+                          BorderRadius.circular(media.width * 0.2)),
+                    ),
+                  ),
+                ),
+                Align(
+                  child: Transform.scale(
+                    scale: 2.2,
+                    origin: Offset(0, media.width * 0.6),
+                    child: Container(
+                      width: media.width,
+                      height: media.width,
+                      decoration: BoxDecoration(
+                          color: Colors.lightBlueAccent.shade400,
                           borderRadius:
                               BorderRadius.circular(media.width * 0.5)),
                     ),
@@ -130,26 +144,36 @@ class _HomeViewState extends State<HomeView> {
                       height: media.width * 0.025,
                     ),
                     AppBar(
-                      backgroundColor: TColor.text,
+                      backgroundColor: Colors.transparent,
+                     /* shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25),
+                          bottomRight: Radius.circular(25),
+                        ),
+                      ),*/
                       elevation: 0,
                       title: Row(children: const [
                         Text(
                           "Trending Books",
+
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w800),
+                              color: Colors.black,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w900),
                         ),
                       ]),
                       leading: Container(),
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               sideMenuScafflodKey.currentState?.openEndDrawer();
                             },
-                            icon: const Icon(Icons.menu))
+                          icon: const Icon(
+                            Icons.menu,
+                            size: 35,
+                          ),)
                       ],
                     ),
                     SizedBox(
@@ -192,7 +216,7 @@ class _HomeViewState extends State<HomeView> {
                           style: TextStyle(
                               color: Colors.black,
                               fontSize: 25,
-                              fontWeight: FontWeight.w800),
+                              fontWeight: FontWeight.w900),
                         ),
                       ]),
                     ),
