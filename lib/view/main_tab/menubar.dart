@@ -78,11 +78,11 @@ class _MainTabViewState extends State<MainTabView>
                       padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
                       decoration: selectMenu == index
-                          ? BoxDecoration(color: TColor.primary, boxShadow: [
+                          ? BoxDecoration(color: Colors.blue, boxShadow: [
                         BoxShadow(
-                            color: TColor.primary,
+                            color: Colors.indigoAccent,
                             blurRadius: 10,
-                            offset: const Offset(0, 3))
+                            offset: const Offset(0, 4))
                       ])
                           : null,
                       child: GestureDetector(
@@ -102,7 +102,7 @@ class _MainTabViewState extends State<MainTabView>
                               mObj["icon"] as IconData? ?? Icons.home,
                               color: selectMenu == index
                                   ? Colors.white
-                                  : TColor.primary,
+                                  : Colors.blueAccent,
                               size: 33,
                             ),
                             Text(

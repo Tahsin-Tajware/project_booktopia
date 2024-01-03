@@ -2,6 +2,7 @@ import 'package:booktopia/common/color_extension.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../book_details.dart';
 import '../../common_widget/best_sellers_cell.dart';
 import '../../common_widget/top_picks_cell.dart';
 import '../main_tab/menubar.dart';
@@ -213,7 +214,7 @@ class _HomeViewState extends State<HomeView> {
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                            color: Colors.black,
+                            color: Colors.white,
                             onPressed: () {
                               sideMenuScafflodKey.currentState?.openEndDrawer();
                             },
@@ -266,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
                         Text(
                           "Featured Books",
                           style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.w900),
                         ),
