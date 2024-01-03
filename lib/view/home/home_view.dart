@@ -1,13 +1,14 @@
 import 'package:booktopia/common/color_extension.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import '../../book_details.dart';
+
 import '../../common_widget/best_sellers_cell.dart';
 import '../../common_widget/top_picks_cell.dart';
 import '../main_tab/menubar.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
+
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -71,6 +72,7 @@ class _HomeViewState extends State<HomeView> {
       "price": 7.49,
       "description": "Heroes will rise. Nations will fall.Behind the towering walls of Belduar,Calen Bryer and his companions stand in defense of the city and its new king. In over a thousand years,Belduar has never fallen. It has stood as a bastion of hope. But the Lorian empire are at its walls once more,and the Dragonguard are coming.In the North,with Faenir by her side,Calen’s sister Ella arrives at the port of Antiquar,her only compass,a letter addressed to her fallen love. But she holds no fear of the unknown. She will see this through,no matter what – or who – gets in her way.Meanwhile,at the embassy of the Circle of Magii in Al’Nasla,Rist Havel hones his newfound powers in preparation for the trials of Faith and Will. Unbeknownst to Rist,he is being watched,measured,and judged. He was not taken into the Circle by chance. There is greatness in him. But great men can do terrible things.As Lorian forces land on southern shores and Aeson Virandr’s letters of rebellion find their way to the right hands,only the Knights of Achyron see the true danger. The danger that stirs in the darkness. The coming shadow will not stop. It will consume all in its path. It wants for nothing but blood and fire."
     }
+
   ];
 
   List bestSellerArr = [
@@ -190,10 +192,8 @@ class _HomeViewState extends State<HomeView> {
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                            color: Colors.white70,
-                            onPressed: () {
-                              sideMenuScafflodKey.currentState?.openEndDrawer();
-                            },
+                            color: Colors.white,
+                            onPressed: () {},
                             icon: const Icon(Icons.menu))
                       ],
                     ),
