@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'BookTopia',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          background: Colors.black, // Set the background color to black
+          background: Colors.black,
         ),
         useMaterial3: true,
       ),
