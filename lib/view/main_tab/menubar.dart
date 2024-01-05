@@ -144,21 +144,22 @@ class _MainTabViewState extends State<MainTabView>
         ],
       ),
       bottomNavigationBar: Container(
-        color: Colors.blue.shade600,
+        color: Colors.transparent,
         child: AnimatedBottomNavigationBar(
           icons: [
             Icons.home,
             Icons.search,
             Icons.shopping_cart_sharp,
+            Icons.person,
           ],
           activeIndex: _currentIndex,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
-          leftCornerRadius: 35,
-          rightCornerRadius: 35,
-          backgroundColor: Colors.blue.shade900,
-          activeColor: Colors.white,
-          inactiveColor: Colors.grey,
+          //leftCornerRadius: 35,
+          //rightCornerRadius: 35,
+          backgroundColor: Colors.cyan.shade900,
+          activeColor: Colors.black,
+          inactiveColor: Colors.white,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
