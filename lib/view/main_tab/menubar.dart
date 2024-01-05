@@ -6,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../../search_view.dart';
+
 class MainTabView extends StatefulWidget {
   const MainTabView({Key? key}) : super(key: key);
 
@@ -78,11 +80,11 @@ class _MainTabViewState extends State<MainTabView>
                       padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
                       decoration: selectMenu == index
-                          ? BoxDecoration(color: TColor.primary, boxShadow: [
+                          ? BoxDecoration(color: Colors.blue, boxShadow: [
                         BoxShadow(
-                            color: TColor.primary,
+                            color: Colors.indigoAccent,
                             blurRadius: 10,
-                            offset: const Offset(0, 3))
+                            offset: const Offset(0, 4))
                       ])
                           : null,
                       child: GestureDetector(
@@ -102,7 +104,7 @@ class _MainTabViewState extends State<MainTabView>
                               mObj["icon"] as IconData? ?? Icons.home,
                               color: selectMenu == index
                                   ? Colors.white
-                                  : TColor.primary,
+                                  : Colors.blueAccent,
                               size: 33,
                             ),
                             Text(
@@ -135,27 +137,29 @@ class _MainTabViewState extends State<MainTabView>
         },
         children: [
           const HomeView(),
-          Container(color: Colors.white24),
+          //Container(color: Colors.white24),
+          SearchPage(),
           Container(color: Colors.green),
           Container(color: Colors.orange),
         ],
       ),
       bottomNavigationBar: Container(
-        color: Colors.blue.shade600,
+        color: Colors.transparent,
         child: AnimatedBottomNavigationBar(
           icons: [
             Icons.home,
             Icons.search,
             Icons.shopping_cart_sharp,
+            Icons.person,
           ],
           activeIndex: _currentIndex,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
-          leftCornerRadius: 35,
-          rightCornerRadius: 35,
-          backgroundColor: Colors.blue.shade900,
-          activeColor: Colors.white,
-          inactiveColor: Colors.grey,
+          //leftCornerRadius: 35,
+          //rightCornerRadius: 35,
+          backgroundColor: Colors.cyan.shade900,
+          activeColor: Colors.black,
+          inactiveColor: Colors.white,
           onTap: (index) {
             setState(() {
               _currentIndex = index;

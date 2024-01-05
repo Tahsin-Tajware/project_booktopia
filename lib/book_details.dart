@@ -10,7 +10,7 @@ class BookDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Book Details'),
-        backgroundColor: Colors.green[200],
+        backgroundColor: Colors.blue.shade500,
         iconTheme: IconThemeData(color: Colors.black),
         toolbarTextStyle: TextTheme(
           titleLarge:
@@ -24,7 +24,7 @@ class BookDetails extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Colors.green[50],
+          color: Colors.blue.shade200,
           padding: const EdgeInsets.all(24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -39,9 +39,9 @@ class BookDetails extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.green.shade50,
+                      color: Colors.blue.shade400,
                       offset: Offset(0, 3),
-                      blurRadius: 10,
+                      blurRadius: 35,
                     ),
                   ],
                 ),
