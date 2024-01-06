@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../../profile/profilepage.dart';
 import '../../search_view.dart';
 
 class MainTabView extends StatefulWidget {
@@ -140,7 +141,7 @@ class _MainTabViewState extends State<MainTabView>
           //Container(color: Colors.white24),
           SearchPage(),
           Container(color: Colors.green),
-          Container(color: Colors.orange),
+          Profilepage(),
         ],
       ),
       bottomNavigationBar: Container(
