@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "609577257326-j1nmk6l14u4euo3elqkgujcfl1fgqd0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project_booktopia",
+            "certificate_hash": "bc8a4d6d6b25420237544246810a61031b6b30d1"
+          }
+        },
+        {
           "client_id": "609577257326-otrb0dh0ig2q31766bc706qpq8lms4ue.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -4,9 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+
+import '../../profile/profilepage.dart';
+import '../../search_view.dart';
 
 class MainTabView extends StatefulWidget {
-  const MainTabView( {super.key});
+  const MainTabView({Key? key}) : super(key: key);
 
   @override
   State<MainTabView> createState() => _MainTabViewState();
@@ -16,14 +20,18 @@ GlobalKey<ScaffoldState> sideMenuScafflodKey = GlobalKey<ScaffoldState>();
 
 class _MainTabViewState extends State<MainTabView>
     with TickerProviderStateMixin {
+  late PageController _pageController;
+  int _currentIndex = 0;
   TabController? controller;
   final currentUser = FirebaseAuth.instance;
   int selectMenu = 0;
+
   Future<void> signout() async {
     final GoogleSignIn googleSign = GoogleSignIn();
     await googleSign.signOut();
     FirebaseAuth.instance.signOut();
   }
+
   List menuArr = [
     {"name": "Home", "icon": Icons.home},
     {"name": "My Account ", "icon": Icons.person},
@@ -36,9 +44,27 @@ class _MainTabViewState extends State<MainTabView>
 
   @override
   void initState() {
-    controller = TabController(length: 4, vsync: this);
-    // TODO: implement initState
     super.initState();
+    _pageController = PageController();
+    controller = TabController(length: 4, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    controller?.dispose();
+    super.dispose();
+  }
+
+  void _navigateTo(int index) {
+    setState(() {
+      _currentIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    });
   }
 
   @override
@@ -49,7 +75,7 @@ class _MainTabViewState extends State<MainTabView>
       endDrawer: Drawer(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        width: media.width * 0.8,
+        width: media.width * 0.6,
         child: Container(
           decoration: BoxDecoration(color: Colors.white, boxShadow: const [
             BoxShadow(color: Colors.black54, blurRadius: 15)
@@ -57,95 +83,117 @@ class _MainTabViewState extends State<MainTabView>
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //const SizedBox(height: 10),
                 Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //mainAxisSize: MainAxisSize.min,
-                    children: menuArr.map((mObj) {
-                      var index = menuArr.indexOf(mObj);
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 30),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 12, horizontal: 15),
-                        decoration: selectMenu == index
-                            ? BoxDecoration(color: TColor.primary, boxShadow: [
-                          BoxShadow(
-                              color: TColor.primary,
-                              blurRadius: 10,
-                              offset: const Offset(0, 3))
-                        ])
-                            : null,
-                        child:  GestureDetector(
-                          onTap: () {
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: menuArr.map((mObj) {
+                    var index = menuArr.indexOf(mObj);
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 30),
+                      padding:
+                      const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                      decoration: selectMenu == index
+                          ? BoxDecoration(color: Colors.blue, boxShadow: [
+                        BoxShadow(
+                            color: Colors.indigoAccent,
+                            blurRadius: 10,
+                            offset: const Offset(0, 4))
+                      ])
+                          : null,
+                      child: GestureDetector(
+                        onTap: () {
+
+                          if (index == 0) {
+                            _navigateTo(0);
+                          }
+
+                          else if (index == 1) {
+                            _navigateTo(3); // Navigate to Profilepage
+                          }
+
+                          else if (index == 6) {
                             signout();
-                            // Navigate to the login page when "Sign Out" is tapped
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => LoginPage(), // Replace LoginView with your login page
+                                builder: (context) => LoginPage(),
                               ),
-                                  (Route<dynamic> route) => false,
+                                  (route) => false,
                             );
-                          },
-                          child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Icon(
-                                mObj["icon"] as IconData? ?? Icons.home,
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
+                              mObj["icon"] as IconData? ?? Icons.home,
+                              color: selectMenu == index
+                                  ? Colors.white
+                                  : Colors.blueAccent,
+                              size: 33,
+                            ),
+                            Text(
+                              mObj["name"].toString(),
+                              style: TextStyle(
                                 color: selectMenu == index
                                     ? Colors.white
-                                    : TColor.primary,
-                                size: 33,
+                                    : TColor.text,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
                               ),
-                              Text(
-                                mObj["name"].toString(),
-                                style: TextStyle(
-                                    color: selectMenu == index
-                                        ? Colors.white
-                                        : TColor.text,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      );
-                    }).toList()),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ],
             ),
           ),
         ),
       ),
-      body: TabBarView(controller: controller, children: [
-        const HomeView(),
-        Container(),
-        Container(),
-        Container(),
-      ]),
-      bottomNavigationBar: BottomAppBar(
-        color: TColor.text,
-        child: TabBar(
-            controller: controller,
-            indicatorColor: Colors.transparent,
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.white,
-            tabs: const [
-              Tab(
-                icon: Icon(Icons.home),
-                text: "Home",
-              ),
-              Tab(
-                icon: Icon(Icons.search),
-                text: "Search",
-              ),
-              Tab(
-                icon: Icon(Icons.menu),
-                text: "Category",
-              ),
-              Tab(
-                icon: Icon(Icons.shopping_bag),
-                text: "Cart",
-              ),
-            ]),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        children: [
+          const HomeView(),
+          SearchPage(),
+          Container(color: Colors.green),
+          Profilepage(),
+
+        ],
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.transparent,
+        child: AnimatedBottomNavigationBar(
+          icons: [
+            Icons.home,
+            Icons.search,
+            Icons.shopping_cart_sharp,
+            Icons.person,
+          ],
+          activeIndex: _currentIndex,
+          gapLocation: GapLocation.none,
+          notchSmoothness: NotchSmoothness.verySmoothEdge,
+          //leftCornerRadius: 35,
+          //rightCornerRadius: 35,
+          backgroundColor: Colors.cyan.shade900,
+          activeColor: Colors.black,
+          inactiveColor: Colors.white,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+              _pageController.animateToPage(
+                index,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.ease,
+              );
+            });
+          },
+        ),
       ),
     );
   }
