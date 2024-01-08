@@ -177,7 +177,7 @@ class _ProfilepageState extends State<Profilepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent.shade200,
+      backgroundColor: Colors.lightBlue[100],
       appBar: AppBar(
         title: Text(
           "My Profile",
@@ -186,7 +186,7 @@ class _ProfilepageState extends State<Profilepage> {
             fontSize: 26,
           ),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.indigoAccent,
         centerTitle: true,
       ),
       body: ListView(

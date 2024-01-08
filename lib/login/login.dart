@@ -40,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/log4.png'),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter, // Align the image at the top
+              fit: BoxFit.none,
+              alignment: Alignment.topCenter,
             ),
           ),
           child: Padding(

@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     double screenH=MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: Colors.cyan,
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
