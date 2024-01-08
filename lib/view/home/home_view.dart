@@ -215,7 +215,7 @@ class _HomeViewState extends State<HomeView> {
                         IconButton(
                             color: Colors.white,
                             onPressed: () {
-                              sideMenuScafflodKey.currentState?.openEndDrawer();
+                              sideMenuScaffoldKey.currentState?.openEndDrawer();
                             },
                           icon: const Icon(
                             Icons.menu,
