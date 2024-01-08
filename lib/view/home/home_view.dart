@@ -213,13 +213,13 @@ class _HomeViewState extends State<HomeView> {
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                            color: Colors.white,
+                            color: Colors.indigo[900],
                             onPressed: () {
                               sideMenuScaffoldKey.currentState?.openEndDrawer();
                             },
                           icon: const Icon(
-                            Icons.menu,
-                            size: 35,
+                            Icons.menu_open_rounded,
+                            size: 40,
                           ),)
                       ],
                     ),
