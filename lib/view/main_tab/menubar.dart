@@ -209,8 +209,8 @@ class _MainTabViewState extends State<MainTabView>
           //leftCornerRadius: 35,
           //rightCornerRadius: 35,
           backgroundColor: Colors.indigo[900],
-          activeColor: Colors.lightGreen[600],
-          inactiveColor: Colors.white,
+          activeColor: Colors.cyanAccent,
+          inactiveColor: Colors.white24,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
