@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final FirebaseAuthServices _auth = FirebaseAuthServices();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _profileController = TextEditingController();
 
   @override
   void dispose() {
@@ -150,41 +152,41 @@ class _SignUpPageState extends State<SignUpPage> {
                   SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      _signInWithGoogle();
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.white24,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/google.png',
-                              height: 30,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              " Sign in with Google",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     _signInWithGoogle();
+                  //   },
+                  //   child: Container(
+                  //     width: double.infinity,
+                  //     height: 45,
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white24,
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     child: Center(
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Image.asset(
+                  //             'assets/google.png',
+                  //             height: 30,
+                  //           ),
+                  //           SizedBox(
+                  //             width: 5,
+                  //           ),
+                  //           Text(
+                  //             " Sign in with Google",
+                  //             style: TextStyle(
+                  //               color: Colors.white,
+                  //               fontWeight: FontWeight.bold,
+                  //               fontSize: 20,
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -198,64 +200,64 @@ class _SignUpPageState extends State<SignUpPage> {
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
+    String profile = _profileController.text;
+
+
 
     try {
-      User? user = await _auth.signUpWithEmailAndPassword(email, password);
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-      if (user != null) {
-        print("User is successfully created: ${user.email}");
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainTabView()));
-      } else {
-        print("User creation failed: User is null");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Account creation failed. Please try again."),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      print("Error during sign up: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error during sign up. Please try again."),
-          duration: Duration(seconds: 3),
-        ),
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.email)
+          .set({
+        'name': name,
+        'email': email,
+        'address': '',
+        'profile': profile,
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainTabView()),
       );
-    }
-  }
-
-  _signInWithGoogle() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
-
-    try {
-      final GoogleSignInAccount? googleSignInAccount =
-          await _googleSignIn.signIn();
-
-      if (googleSignInAccount != null) {
-        final GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount.authentication;
-
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          idToken: googleSignInAuthentication.idToken,
-          accessToken: googleSignInAuthentication.accessToken,
-        );
-
-        User? user = await _auth.signInWithGoogle(credential);
-
-        if (user != null) {
-          print("Successfully signed in with Google: ${user.email}");
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MainTabView()));
-        } else {
-          print("Google Sign-In failed: User is null");
-          // Handle Google Sign-In failure if needed
-        }
-      }
     } catch (e) {
-      print("Error during Google Sign-In: $e");
-      // Handle Google Sign-In error if needed
+      print("Error signing up: $e");
+
     }
   }
 }
+//   _signInWithGoogle() async {
+//     final GoogleSignIn _googleSignIn = GoogleSignIn();
+//
+//     try {
+//       final GoogleSignInAccount? googleSignInAccount =
+//           await _googleSignIn.signIn();
+//
+//       if (googleSignInAccount != null) {
+//         final GoogleSignInAuthentication googleSignInAuthentication =
+//             await googleSignInAccount.authentication;
+//
+//         final AuthCredential credential = GoogleAuthProvider.credential(
+//           idToken: googleSignInAuthentication.idToken,
+//           accessToken: googleSignInAuthentication.accessToken,
+//         );
+//
+//         User? user = await _auth.signInWithGoogle(credential);
+//
+//         if (user != null) {
+//           print("Successfully signed in with Google: ${user.email}");
+//           Navigator.pushReplacement(
+//               context, MaterialPageRoute(builder: (context) => MainTabView()));
+//         } else {
+//           print("Google Sign-In failed: User is null");
+//           // Handle Google Sign-In failure if needed
+//         }
+//       }
+//     } catch (e) {
+//       print("Error during Google Sign-In: $e");
+//       // Handle Google Sign-In error if needed
+//     }
+//   }
+

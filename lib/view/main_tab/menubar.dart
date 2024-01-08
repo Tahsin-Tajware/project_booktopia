@@ -6,6 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../../profile/profilepage.dart';
 import '../../search_view.dart';
 
 class MainTabView extends StatefulWidget {
@@ -55,6 +56,17 @@ class _MainTabViewState extends State<MainTabView>
     super.dispose();
   }
 
+  void _navigateTo(int index) {
+    setState(() {
+      _currentIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -89,14 +101,25 @@ class _MainTabViewState extends State<MainTabView>
                           : null,
                       child: GestureDetector(
                         onTap: () {
-                          signout();
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  LoginPage(), // Replace LoginView with your login page
-                            ),
-                                (Route<dynamic> route) => false,
-                          );
+
+                          if (index == 0) {
+                            _navigateTo(0);
+                          }
+
+                          else if (index == 1) {
+                            _navigateTo(3); // Navigate to Profilepage
+                          }
+
+                          else if (index == 6) {
+                            signout();
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                                  (route) => false,
+                            );
+                          }
+                          Navigator.pop(context);
                         },
                         child: Row(
                           children: [
@@ -137,10 +160,10 @@ class _MainTabViewState extends State<MainTabView>
         },
         children: [
           const HomeView(),
-          //Container(color: Colors.white24),
           SearchPage(),
           Container(color: Colors.green),
-          Container(color: Colors.orange),
+          Profilepage(),
+
         ],
       ),
       bottomNavigationBar: Container(
