@@ -20,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _profileController = TextEditingController();
 
   @override
   void dispose() {
@@ -199,6 +200,9 @@ class _SignUpPageState extends State<SignUpPage> {
     String name = _nameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
+    String profile = _profileController.text;
+
+
 
     try {
       UserCredential userCredential = await _auth
@@ -211,6 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
         'name': name,
         'email': email,
         'address': '',
+        'profile': profile,
       });
 
       Navigator.pushReplacement(
