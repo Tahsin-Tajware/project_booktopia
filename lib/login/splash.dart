@@ -25,7 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenW=MediaQuery.of(context).size.width;
+    double screenH=MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

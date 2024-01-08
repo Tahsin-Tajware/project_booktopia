@@ -6,6 +6,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
+import '../../profile/profilepage.dart';
+import '../../search_view.dart';
+
 class MainTabView extends StatefulWidget {
   const MainTabView({Key? key}) : super(key: key);
 
@@ -13,7 +16,7 @@ class MainTabView extends StatefulWidget {
   State<MainTabView> createState() => _MainTabViewState();
 }
 
-GlobalKey<ScaffoldState> sideMenuScafflodKey = GlobalKey<ScaffoldState>();
+GlobalKey<ScaffoldState> sideMenuScaffoldKey = GlobalKey<ScaffoldState>();
 
 class _MainTabViewState extends State<MainTabView>
     with TickerProviderStateMixin {
@@ -36,7 +39,6 @@ class _MainTabViewState extends State<MainTabView>
     {"name": "Setting", "icon": Icons.settings},
     {"name": "Chat", "icon": Icons.chat},
     {"name": "My Order", "icon": Icons.payment},
-    {"name": "Sign Out", "icon": Icons.logout},
   ];
 
   @override
@@ -53,65 +55,92 @@ class _MainTabViewState extends State<MainTabView>
     super.dispose();
   }
 
+  void _navigateTo(int index) {
+    setState(() {
+      _currentIndex = index;
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
-      key: sideMenuScafflodKey,
+      key: sideMenuScaffoldKey,
       endDrawer: Drawer(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        width: media.width * 0.6,
+        width: media.width * 0.57,
         child: Container(
-          decoration: BoxDecoration(color: Colors.white, boxShadow: const [
-            BoxShadow(color: Colors.black54, blurRadius: 15)
-          ]),
+          decoration: BoxDecoration(
+            color: Colors.blue[50],
+            boxShadow: const [BoxShadow(color: Colors.black54, blurRadius: 15)],
+          ),
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: <Widget>[
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      'assets/logo.png',
+                      height: 200,
+                      width: 200,
+                    ),
+                  ),
+                ),
+
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: menuArr.map((mObj) {
                     var index = menuArr.indexOf(mObj);
                     return Container(
-                      margin: const EdgeInsets.only(bottom: 30),
-                      padding:
-                      const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                      margin: const EdgeInsets.only(bottom: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 15),
                       decoration: selectMenu == index
-                          ? BoxDecoration(color: Colors.blue, boxShadow: [
-                        BoxShadow(
-                            color: Colors.indigoAccent,
-                            blurRadius: 10,
-                            offset: const Offset(0, 4))
-                      ])
+                          ? BoxDecoration(
+                              color: Colors.blue,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.indigoAccent,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4))
+                              ],
+                            )
                           : null,
                       child: GestureDetector(
                         onTap: () {
-                          signout();
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  LoginPage(), // Replace LoginView with your login page
-                            ),
-                                (Route<dynamic> route) => false,
-                          );
+                          if (index == 0) {
+                            _navigateTo(0);
+                          } else if (index == 1) {
+                            _navigateTo(3); // Navigate to Profilepage
+                          }
+                          Navigator.pop(context);
                         },
                         child: Row(
                           children: [
                             Icon(
                               mObj["icon"] as IconData? ?? Icons.home,
                               color: selectMenu == index
-                                  ? Colors.white
-                                  : Colors.blueAccent,
+                                  ? Colors.indigo[900]
+                                  : Colors.blue[700],
                               size: 33,
                             ),
                             Text(
                               mObj["name"].toString(),
                               style: TextStyle(
                                 color: selectMenu == index
-                                    ? Colors.white
-                                    : TColor.text,
-                                fontSize: 18,
+                                    ? Colors.indigo[900]
+                                    : Colors.indigo[900],
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -120,6 +149,31 @@ class _MainTabViewState extends State<MainTabView>
                       ),
                     );
                   }).toList(),
+                ),
+                //SizedBox(height: 290,),
+                ListTile(
+                  onTap: () {
+                    signout();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  leading: Icon(
+                    Icons.logout,
+                    color: Colors.red,
+                    size: 33,
+                  ),
+                  title: Text(
+                    "Sign Out",
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -135,27 +189,28 @@ class _MainTabViewState extends State<MainTabView>
         },
         children: [
           const HomeView(),
-          Container(color: Colors.white24),
+          SearchPage(),
           Container(color: Colors.green),
-          Container(color: Colors.orange),
+          Profilepage(),
         ],
       ),
       bottomNavigationBar: Container(
-        color: Colors.blue.shade600,
+        color: Colors.transparent,
         child: AnimatedBottomNavigationBar(
           icons: [
             Icons.home,
             Icons.search,
             Icons.shopping_cart_sharp,
+            Icons.person,
           ],
           activeIndex: _currentIndex,
           gapLocation: GapLocation.none,
           notchSmoothness: NotchSmoothness.verySmoothEdge,
-          leftCornerRadius: 35,
-          rightCornerRadius: 35,
-          backgroundColor: Colors.blue.shade900,
-          activeColor: Colors.white,
-          inactiveColor: Colors.grey,
+          //leftCornerRadius: 35,
+          //rightCornerRadius: 35,
+          backgroundColor: Colors.indigo[900],
+          activeColor: Colors.lightGreen[600],
+          inactiveColor: Colors.white,
           onTap: (index) {
             setState(() {
               _currentIndex = index;
