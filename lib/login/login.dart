@@ -40,8 +40,8 @@ class _LoginPageState extends State<LoginPage> {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/log4.png'),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter, // Align the image at the top
+              fit: BoxFit.none,
+              alignment: Alignment.topCenter,
             ),
           ),
           child: Padding(
@@ -155,31 +155,51 @@ class _LoginPageState extends State<LoginPage> {
     String password = _passwordController.text;
 
     try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       User? user = await _auth.signInWithEmailAndPassword(email, password);
 
-      if (user != null) {
-        print("Successfully signed in: ${user.email}");
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainTabView()));
-      } else {
-        print("Sign in failed: User is null");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Incorrect email or password. Please try again.",
-                style: TextStyle(color: Colors.red, fontSize: 15)),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.pop(context);
+        if (user != null) {
+          print("Successfully signed in: ${user.email}");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainTabView()),
+          );
+        } else {
+          print("Sign in failed: User is null");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Incorrect email or password. Please try again.",
+                style: TextStyle(color: Colors.red, fontSize: 15),
+              ),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      });
     } catch (e) {
       print("Error during sign in: $e");
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Error during sign in. Please try again.",
-              style: TextStyle(color: Colors.red, fontSize: 15)),
+          content: Text(
+            "Error during sign in. Please try again.",
+            style: TextStyle(color: Colors.red, fontSize: 15),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
     }
   }
+
 }

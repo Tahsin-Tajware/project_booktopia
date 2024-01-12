@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:booktopia/profile/textbox.dart';
 import '../login/login.dart';
@@ -16,10 +17,12 @@ class Profilepage extends StatefulWidget {
 class _ProfilepageState extends State<Profilepage> {
   late String _name = "";
   late String _address = "";
+  late String _profileImageURL="";
   File? _imageFile;
 
   final currentuser = FirebaseAuth.instance.currentUser!;
   final userCollection = FirebaseFirestore.instance.collection("users");
+  final _imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -40,11 +43,11 @@ class _ProfilepageState extends State<Profilepage> {
         setState(() {
           _name = userSnapshot.get('name') ?? "";
           _address = userSnapshot.get('address') ?? "";
+          _profileImageURL = userSnapshot.get('profile') ?? "";
         });
       }
     }
   }
-
   Future<void> editField(String field) async {
     late String newValue;
     late String fieldName;
@@ -132,26 +135,49 @@ class _ProfilepageState extends State<Profilepage> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile =
-    await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
 
-
+      await _uploadImageToFirebaseStorage(); // Upload the image after selection
     }
   }
 
   Future<void> _uploadImageToFirebaseStorage() async {
+    if (_imageFile != null) {
+      try {
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('profile_images/${currentuser.email}.jpg'); // Set your own path and file extension
 
+        final uploadTask = storageRef.putFile(_imageFile!);
+        await uploadTask;
+
+        final downloadURL = await storageRef.getDownloadURL();
+
+        // Update the profile picture URL in Firestore
+        await userCollection.doc(currentuser.email).update({'profile': downloadURL});
+
+        setState(() {
+          _profileImageURL = downloadURL; // Update the local profile image URL
+        });
+
+        print('Profile picture URL updated in Firestore: $downloadURL');
+      } catch (e) {
+        print("Error uploading image: $e");
+        // Handle the error if necessary
+      }
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlueAccent.shade200,
+      backgroundColor: Colors.lightBlue[100],
       appBar: AppBar(
         title: Text(
           "My Profile",
@@ -160,7 +186,7 @@ class _ProfilepageState extends State<Profilepage> {
             fontSize: 26,
           ),
         ),
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.indigoAccent,
         centerTitle: true,
       ),
       body: ListView(
@@ -271,6 +297,7 @@ class _ProfilepageState extends State<Profilepage> {
           ),
         ],
       ),
+
     );
   }
 
