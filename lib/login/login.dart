@@ -6,12 +6,31 @@ import '../Forgotpass.dart';
 import 'container_widget.dart';
 import 'firebase_auth_services.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final FirebaseAuthServices _auth = FirebaseAuthServices();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  late TextEditingController _emailController;
+  late TextEditingController _passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+    _passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +39,9 @@ class LoginPage extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/log4.png'),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter, // Align the image at the top
+              image: AssetImage('assets/pro3.png'),
+              fit: BoxFit.none,
+              alignment: Alignment.topCenter,
             ),
           ),
           child: Padding(
@@ -30,13 +49,20 @@ class LoginPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 250),
+                SizedBox(height: 20,),
+                Image.asset(
+                  'assets/logo.png',
+                  width: 180,
+                  height: 180,
+                ),
+                SizedBox(height: 100),
                 Text(
                   "Welcome to booktopia! Sign in to continue...",
                   style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900),
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -136,31 +162,51 @@ class LoginPage extends StatelessWidget {
     String password = _passwordController.text;
 
     try {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      );
       User? user = await _auth.signInWithEmailAndPassword(email, password);
 
-      if (user != null) {
-        print("Successfully signed in: ${user.email}");
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MainTabView()));
-      } else {
-        print("Sign in failed: User is null");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Incorrect email or password. Please try again.",
-                style: TextStyle(color: Colors.red, fontSize: 15)),
-            duration: Duration(seconds: 3),
-          ),
-        );
-      }
+      Future.delayed(Duration(seconds: 1), () {
+        Navigator.pop(context);
+        if (user != null) {
+          print("Successfully signed in: ${user.email}");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => MainTabView()),
+          );
+        } else {
+          print("Sign in failed: User is null");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                "Incorrect email or password. Please try again.",
+                style: TextStyle(color: Colors.red, fontSize: 15),
+              ),
+              duration: Duration(seconds: 3),
+            ),
+          );
+        }
+      });
     } catch (e) {
       print("Error during sign in: $e");
+      Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Error during sign in. Please try again.",
-              style: TextStyle(color: Colors.red, fontSize: 15)),
+          content: Text(
+            "Error during sign in. Please try again.",
+            style: TextStyle(color: Colors.red, fontSize: 15),
+          ),
           duration: Duration(seconds: 2),
         ),
       );
     }
   }
+
 }
