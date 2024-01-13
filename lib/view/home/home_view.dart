@@ -23,20 +23,21 @@ class _HomeViewState extends State<HomeView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Stack(
               alignment: Alignment.topCenter,
               children: [
                 Align(
                   child: Transform.scale(
-                    scale: 0.7,
-                    origin: Offset(0, media.width * 0.6),
+                    scale: 0.76,
+                    origin: Offset(0, media.width * 0.87),
                     child: Container(
                       width: media.width,
                       height: media.width,
                       decoration: BoxDecoration(
-                          color: Colors.lightBlueAccent.shade400,
-                          borderRadius:
-                              BorderRadius.circular(media.width * 0.2)),
+                        color: Colors.lightBlueAccent.shade400,
+                        borderRadius: BorderRadius.circular(media.width * 0.2),
+                      ),
                     ),
                   ),
                 ),
@@ -48,9 +49,9 @@ class _HomeViewState extends State<HomeView> {
                       width: media.width,
                       height: media.width,
                       decoration: BoxDecoration(
-                          color: Colors.lightBlueAccent.shade400,
-                          borderRadius:
-                              BorderRadius.circular(media.width * 0.5)),
+                        color: Colors.lightBlueAccent.shade400,
+                        borderRadius: BorderRadius.circular(media.width * 0.5),
+                      ),
                     ),
                   ),
                 ),
@@ -58,6 +59,7 @@ class _HomeViewState extends State<HomeView> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // AppBar
                     SizedBox(
                       height: media.width * 0.025,
                     ),
@@ -70,15 +72,18 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       ),
                       elevation: 0,
-                      title: Row(children: [
-                        Text(
-                          "Trending Books",
-                          style: TextStyle(
+                      title: Row(
+                        children: [
+                          Text(
+                            "Trending Books",
+                            style: TextStyle(
                               color: Colors.cyan.shade50,
                               fontSize: 25,
-                              fontWeight: FontWeight.w800),
-                        ),
-                      ]),
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ],
+                      ),
                       leading: Container(),
                       leadingWidth: 2,
                       actions: [
@@ -94,6 +99,10 @@ class _HomeViewState extends State<HomeView> {
                         )
                       ],
                     ),
+
+                    SizedBox(height: 23,),
+
+
                     StreamBuilder<QuerySnapshot>(
                       stream: firestore
                           .collection('TrendingBooks')
@@ -101,14 +110,95 @@ class _HomeViewState extends State<HomeView> {
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: snapshot.data!.docs.length,
-                            itemBuilder: (context, index) {
-                              DocumentSnapshot doc = snapshot.data!.docs[index];
-                              return BookItem(doc: doc);
-                            },
+                          return SizedBox(
+                            child: CarouselSlider.builder(
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index, realIndex) {
+                                DocumentSnapshot doc =
+                                    snapshot.data!.docs[index];
+
+                                return GestureDetector(
+                                    onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => BookDetails(
+                                        id: doc.id,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  children: [
+
+                                    Image.network(
+                                      doc.get('imageUrl'),
+                                      fit: BoxFit.contain,
+                                      cacheWidth:170,
+                                      cacheHeight:230,
+                                    ),
+
+                                    SizedBox(height: 12),
+
+                                    Text(
+                                      doc.get('name'),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.brown.shade50,
+                                        fontWeight: FontWeight.w900,
+                                        textBaseline: TextBaseline.alphabetic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 4),
+                                    Text(
+                                      doc.get('author'),
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.cyan.shade50,
+                                        fontWeight: FontWeight.w900,
+                                      ),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                    SizedBox(height: 4),
+                                    RatingBar.builder(
+                                      itemSize: 20,
+                                      initialRating:  double.parse(doc.get('rating')),
+                                      minRating: 1,
+                                      direction: Axis.horizontal,
+                                      allowHalfRating: true,
+                                      itemCount: 5,
+                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star_rounded,
+                                        color: Colors.amber[600],
+                                      ),
+                                      onRatingUpdate: (rating) {},
+                                    ),
+
+                                    SizedBox(height: 8),
+                                  ],
+                                )
+                                );
+                              },
+
+
+                              options: CarouselOptions(
+                                height: 360,
+                                aspectRatio: 1,
+                                viewportFraction: 0.8,
+                                autoPlay: true,
+                                enableInfiniteScroll: true,
+                                reverse: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                autoPlayCurve: Curves.fastOutSlowIn,
+                                enlargeCenterPage: true,
+                                enlargeFactor: 0.4,
+                                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                                scrollDirection: Axis.horizontal,
+                              ),
+                            ),
                           );
                         } else if (snapshot.hasError) {
                           return Text('Something went wrong');
@@ -117,26 +207,29 @@ class _HomeViewState extends State<HomeView> {
                         }
                       },
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
+
                     SizedBox(
                       // width: media.width,
                       // height: media.width * 0.9,
-                      // color:Colors.red,
+                      // color: Colors.red,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(children: [
-                          Text(
-                            "Featured Books",
-                            style: TextStyle(
+                        child: Row(
+                          children: [
+                            Text(
+                              "Featured Books",
+                              style: TextStyle(
                                 color: Colors.cyan.shade50,
                                 fontSize: 25,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ]),
+                                fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+
+                    SizedBox(height: 20,),
                     StreamBuilder<QuerySnapshot>(
                       stream: firestore
                           .collection('FeaturedBooks')
@@ -162,7 +255,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     SizedBox(
                       height: 40,
-                    )
+                    ),
                   ],
                 ),
               ],
