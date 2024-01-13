@@ -50,6 +50,45 @@ class _ProfilepageState extends State<Profilepage> {
     }
   }
 
+  Future<void> _uploadImageToFirebaseStorage() async {
+    if (_imageFile != null) {
+      try {
+        final storageRef = FirebaseStorage.instance.ref().child(
+            'profile_images/${currentuser.email}.jpg');
+
+        final uploadTask = storageRef.putFile(_imageFile!);
+        await uploadTask;
+
+        final downloadURL = await storageRef.getDownloadURL();
+
+        await userCollection
+            .doc(currentuser.email)
+            .update({'profile': downloadURL});
+
+        setState(() {
+          _profileImageURL = downloadURL;
+        });
+
+        print('Profile picture URL updated in Firestore: $downloadURL');
+      } catch (e) {
+        print("Error uploading image: $e");
+      }
+    }
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+    await _imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+
+      await _uploadImageToFirebaseStorage();
+    }
+  }
+
   Future<void> editField(String field) async {
     late String newValue;
     late String fieldName;
@@ -103,7 +142,7 @@ class _ProfilepageState extends State<Profilepage> {
               if (newValue.isNotEmpty) {
                 try {
                   final userDoc =
-                      await userCollection.doc(currentuser.email).get();
+                  await userCollection.doc(currentuser.email).get();
 
                   if (userDoc.exists) {
                     await userCollection
@@ -134,47 +173,6 @@ class _ProfilepageState extends State<Profilepage> {
     );
   }
 
-  Future<void> _pickImage() async {
-    final pickedFile =
-        await _imagePicker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-
-      await _uploadImageToFirebaseStorage();
-    }
-  }
-
-  Future<void> _uploadImageToFirebaseStorage() async {
-    if (_imageFile != null) {
-      try {
-        final storageRef = FirebaseStorage.instance.ref().child(
-            'profile_images/${currentuser.email}.jpg');
-
-        final uploadTask = storageRef.putFile(_imageFile!);
-        await uploadTask;
-
-        final downloadURL = await storageRef.getDownloadURL();
-
-        // Update the profile picture URL in Firestore
-        await userCollection
-            .doc(currentuser.email)
-            .update({'profile': downloadURL});
-
-        setState(() {
-          _profileImageURL = downloadURL;
-        });
-
-        print('Profile picture URL updated in Firestore: $downloadURL');
-      } catch (e) {
-        print("Error uploading image: $e");
-
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -191,11 +189,11 @@ class _ProfilepageState extends State<Profilepage> {
         centerTitle: true,
       ),
       body: RefreshIndicator(
-        onRefresh: () {
+        onRefresh: () async {
           setState(() {
             _userDataFuture = _fetchUserData();
           });
-          return _userDataFuture;
+          await _userDataFuture;
         },
         child: FutureBuilder<void>(
           future: _userDataFuture,
@@ -225,16 +223,23 @@ class _ProfilepageState extends State<Profilepage> {
                               child: ClipOval(
                                 child: _imageFile != null
                                     ? Image.file(
-                                        _imageFile!,
-                                        width: 120,
-                                        height: 120,
-                                        fit: BoxFit.cover,
-                                      )
+                                  _imageFile!,
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                )
+                                    : _profileImageURL.isNotEmpty
+                                    ? Image.network(
+                                  _profileImageURL,
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                )
                                     : Icon(
-                                        Icons.person,
-                                        size: 72,
-                                        color: Colors.grey[600],
-                                      ),
+                                  Icons.person,
+                                  size: 72,
+                                  color: Colors.grey[600],
+                                ),
                               ),
                             ),
                             Positioned(
@@ -308,7 +313,7 @@ class _ProfilepageState extends State<Profilepage> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                        EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                       ),
                     ),
                   ),
