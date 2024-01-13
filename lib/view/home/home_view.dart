@@ -30,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
                 Align(
                   child: Transform.scale(
                     scale: 0.76,
-                    origin: Offset(0, media.width * 0.87),
+                    origin: Offset(0, media.width * 0.95),
                     child: Container(
                       width: media.width,
                       height: media.width,
@@ -77,9 +77,9 @@ class _HomeViewState extends State<HomeView> {
                           Text(
                             "Trending Books",
                             style: TextStyle(
-                              color: Colors.cyan.shade50,
+                              color: Colors.white,
                               fontSize: 25,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w900,
                             ),
                           ),
                         ],
@@ -88,7 +88,7 @@ class _HomeViewState extends State<HomeView> {
                       leadingWidth: 2,
                       actions: [
                         IconButton(
-                          color: Colors.indigo[900],
+                          color: Colors.white,
                           onPressed: () {
                             sideMenuScaffoldKey.currentState?.openEndDrawer();
                           },
@@ -207,19 +207,21 @@ class _HomeViewState extends State<HomeView> {
                         }
                       },
                     ),
+                    Divider(
+                      color: Colors.white54,
+                      thickness: 3,
+                    ),
 
                     SizedBox(
-                      // width: media.width,
-                      // height: media.width * 0.9,
-                      // color: Colors.red,
                       child: Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Featured Books",
+                              "------  Available Books  ------",
                               style: TextStyle(
-                                color: Colors.cyan.shade50,
+                                color: Colors.white,
                                 fontSize: 25,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -229,7 +231,10 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ),
 
-                    SizedBox(height: 20,),
+                    Divider(
+                      color: Colors.white54,
+                      thickness: 3,
+                    ),
                     StreamBuilder<QuerySnapshot>(
                       stream: firestore
                           .collection('FeaturedBooks')
