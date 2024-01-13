@@ -17,8 +17,9 @@ class Profilepage extends StatefulWidget {
 class _ProfilepageState extends State<Profilepage> {
   late String _name = "";
   late String _address = "";
-  late String _profileImageURL="";
+  late String _profileImageURL = "";
   File? _imageFile;
+  late Future<void> _userDataFuture;
 
   final currentuser = FirebaseAuth.instance.currentUser!;
   final userCollection = FirebaseFirestore.instance.collection("users");
@@ -27,7 +28,7 @@ class _ProfilepageState extends State<Profilepage> {
   @override
   void initState() {
     super.initState();
-    _fetchUserData();
+    _userDataFuture = _fetchUserData();
   }
 
   Future<void> _fetchUserData() async {
@@ -48,6 +49,7 @@ class _ProfilepageState extends State<Profilepage> {
       }
     }
   }
+
   Future<void> editField(String field) async {
     late String newValue;
     late String fieldName;
@@ -101,7 +103,7 @@ class _ProfilepageState extends State<Profilepage> {
               if (newValue.isNotEmpty) {
                 try {
                   final userDoc =
-                  await userCollection.doc(currentuser.email).get();
+                      await userCollection.doc(currentuser.email).get();
 
                   if (userDoc.exists) {
                     await userCollection
@@ -121,11 +123,9 @@ class _ProfilepageState extends State<Profilepage> {
                   }
                 } catch (e) {
                   print("Error updating $fieldName: $e");
-
                 }
               } else {
                 print('Value cannot be empty');
-
               }
             },
           ),
@@ -135,23 +135,23 @@ class _ProfilepageState extends State<Profilepage> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await _imagePicker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
 
-      await _uploadImageToFirebaseStorage(); // Upload the image after selection
+      await _uploadImageToFirebaseStorage();
     }
   }
 
   Future<void> _uploadImageToFirebaseStorage() async {
     if (_imageFile != null) {
       try {
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('profile_images/${currentuser.email}.jpg'); // Set your own path and file extension
+        final storageRef = FirebaseStorage.instance.ref().child(
+            'profile_images/${currentuser.email}.jpg');
 
         final uploadTask = storageRef.putFile(_imageFile!);
         await uploadTask;
@@ -159,20 +159,21 @@ class _ProfilepageState extends State<Profilepage> {
         final downloadURL = await storageRef.getDownloadURL();
 
         // Update the profile picture URL in Firestore
-        await userCollection.doc(currentuser.email).update({'profile': downloadURL});
+        await userCollection
+            .doc(currentuser.email)
+            .update({'profile': downloadURL});
 
         setState(() {
-          _profileImageURL = downloadURL; // Update the local profile image URL
+          _profileImageURL = downloadURL;
         });
 
         print('Profile picture URL updated in Firestore: $downloadURL');
       } catch (e) {
         print("Error uploading image: $e");
-        // Handle the error if necessary
+
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -189,115 +190,134 @@ class _ProfilepageState extends State<Profilepage> {
         backgroundColor: Colors.indigoAccent,
         centerTitle: true,
       ),
-      body: ListView(
-        children: [
-          const SizedBox(height: 30),
-          GestureDetector(
-            onTap: _pickImage,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: 120,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                      ),
-                      child: ClipOval(
-                        child: _imageFile != null
-                            ? Image.file(
-                          _imageFile!,
-                          width: 120,
-                          height: 120,
-                          fit: BoxFit.cover,
-                        )
-                            : Icon(
-                          Icons.person,
-                          size: 72,
-                          color: Colors.grey[600],
+      body: RefreshIndicator(
+        onRefresh: () {
+          setState(() {
+            _userDataFuture = _fetchUserData();
+          });
+          return _userDataFuture;
+        },
+        child: FutureBuilder<void>(
+          future: _userDataFuture,
+          builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return ListView(
+                children: [
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Container(
+                              width: 120,
+                              height: 120,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                              ),
+                              child: ClipOval(
+                                child: _imageFile != null
+                                    ? Image.file(
+                                        _imageFile!,
+                                        width: 120,
+                                        height: 120,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Icon(
+                                        Icons.person,
+                                        size: 72,
+                                        color: Colors.grey[600],
+                                      ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                onTap: _pickImage,
+                                child: Container(
+                                  padding: EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.teal,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      "Signed in as:",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.purple[500],
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: _pickImage,
-                        child: Container(
-                          padding: EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.teal,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                            size: 20,
-                          ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    currentuser.email!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextBox(
+                    text: _name,
+                    sectionName: 'Name',
+                    onPressed: () => editField('name'),
+                  ),
+                  TextBox(
+                    text: _address,
+                    sectionName: 'Enter your address',
+                    onPressed: () => editField('address'),
+                  ),
+                  SizedBox(height: 50),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () => _signOut(context),
+                      child: Text(
+                        'Sign Out',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      ),
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              "Signed in as:",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.purple[500],
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            currentuser.email!,
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black, fontSize: 16),
-          ),
-          SizedBox(height: 10,),
-          TextBox(
-            text: _name,
-            sectionName: 'Name',
-            onPressed: () => editField('name'),
-          ),
-
-          TextBox(
-            text: _address,
-            sectionName: 'Enter your address',
-            onPressed: () => editField('address'),
-          ),
-          SizedBox(height: 50),
-          Center(
-            child: ElevatedButton(
-              onPressed: () => _signOut(context),
-              child: Text(
-                'Sign Out',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-              ),
-            ),
-          ),
-        ],
+                  ),
+                ],
+              );
+            }
+          },
+        ),
       ),
-
     );
   }
 
