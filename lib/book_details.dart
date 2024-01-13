@@ -1,149 +1,201 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BookDetails extends StatelessWidget {
-  final Map bookDetails;
+  final String id;
 
-  const BookDetails({Key? key, required this.bookDetails}) : super(key: key);
+  const BookDetails({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Book Details'),
+        title: Text(
+          'Book Details',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.cyan.shade50,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
         backgroundColor: Colors.indigo[600],
-        iconTheme: IconThemeData(color: Colors.black),
-        toolbarTextStyle: TextTheme(
-          titleLarge: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ).bodyMedium,
-        titleTextStyle: TextTheme(
-          titleLarge: TextStyle(
-              color: Colors.black, fontSize: 21, fontWeight: FontWeight.bold),
-        ).titleLarge,
+        iconTheme: IconThemeData(color: Colors.cyan.shade50),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.blue.shade100,
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(bookDetails["img"].toString()),
-                    fit: BoxFit.contain,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.blue.shade400,
-                      offset: Offset(0, 3),
-                      blurRadius: 35,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 14),
-              Text(
-                "${bookDetails["name"]}",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 4),
-              Text(
-                "by ${bookDetails["author"]}",
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 4),
-              Text(
-                "Rating: ${bookDetails["rating"]}",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900,color: Colors.red),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 4),
-              Text(
-                'Price : \$${bookDetails["price"].toString()}',
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w900,color: Colors.indigo),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: fetchBookDetails(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Something went wrong'));
+          } else if (snapshot.data == null) {
+            return Center(child: Text('Book not found'));
+          }
+
+          var bookData = snapshot.data!;
+
+          return SingleChildScrollView(
+            child: Container(
+              color: Colors.indigo.shade600,
+              padding: const EdgeInsets.all(24.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                    ),
-                    icon: Icon(Icons.shopping_cart, color: Colors.black),
-                    label: Text(
-                      'Buy Now',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w900,
+                  Container(
+                    height: 300,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(bookData['imageUrl']),
+                        fit: BoxFit.contain,
                       ),
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.shade400,
+                          offset: Offset(0, 3),
+                          blurRadius: 35,
+                        ),
+                      ],
                     ),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.orange[900],
+                  SizedBox(height: 14),
+                  Text(
+                    bookData['name'],
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.cyan.shade50,
+                        fontWeight: FontWeight.w900),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 14),
+                  Text(
+                    'by ' + bookData['author'].toString(),
+                    style: TextStyle(
+                      color: Colors.cyan.shade50,
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w700,
                     ),
-                    icon: Icon(Icons.favorite, color: Colors.black),
-                    label: Text(
-                      'Add to Cart',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w900,
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 14),
+                  Text(
+                    'Rating: ' + bookData['rating'].toString(),
+                    style: TextStyle(
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.cyan.shade50,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 14),
+                  Text(
+                    'Price: ' + bookData['price'].toString(),
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.cyan.shade50,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green),
+                        icon: Icon(Icons.shopping_cart, color: Colors.white),
+                        label: Text(
+                          'Buy Now',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange[900],
+                        ),
+                        icon: Icon(Icons.favorite, color: Colors.white),
+                        label: Text(
+                          'Add to Cart',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Book Description: ' + bookData['description'].toString(),
+                    style: TextStyle(
+                        fontSize: 17,
+                        color: Colors.cyan.shade50,
+                        fontWeight: FontWeight.w700),
+                    textAlign: TextAlign.justify,
+                  ),
+                  SizedBox(height: 14),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple,
+                      ),
+                      icon: Icon(Icons.arrow_back, color: Colors.white),
+                      label: Text(
+                        'Go Back',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 16),
-              Text(
-                "Short Description: ${bookDetails["description"]}",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
-                textAlign: TextAlign.justify,
-              ),
-              SizedBox(height: 24),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.deepPurple,
-                  ),
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
-                  label: Text(
-                    '       back          ',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 16),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  Future<Map<String, dynamic>> fetchBookDetails() async {
+    try {
+      DocumentSnapshot trendingSnapshot = await FirebaseFirestore.instance
+          .collection('TrendingBooks')
+          .doc(id)
+          .get();
+
+      if (!trendingSnapshot.exists) {
+        DocumentSnapshot featuredSnapshot = await FirebaseFirestore.instance
+            .collection('FeaturedBooks')
+            .doc(id)
+            .get();
+
+        if (!featuredSnapshot.exists) {
+          return {}; // Book not found
+        } else {
+          return featuredSnapshot.data() as Map<String, dynamic>;
+        }
+      } else {
+        return trendingSnapshot.data() as Map<String, dynamic>;
+      }
+    } catch (e) {
+      print('Error fetching book details: $e');
+      throw Exception('Error fetching book details');
+    }
   }
 }
