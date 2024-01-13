@@ -67,6 +67,12 @@ class _HomeViewState extends State<HomeView> {
           ),
           SliverToBoxAdapter(
             child: Container(
+              height: 2, // Divider height
+              color: Colors.grey, // Divider color
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -74,13 +80,19 @@ class _HomeViewState extends State<HomeView> {
                   Text(
                     "Trending Books",
                     style: TextStyle(
-                      color: Colors.cyan.shade50,
+                      color: Colors.deepOrange,
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 2, // Divider height
+              color: Colors.grey, // Divider color
             ),
           ),
           StreamBuilder<QuerySnapshot>(
@@ -117,6 +129,12 @@ class _HomeViewState extends State<HomeView> {
           ),
           SliverToBoxAdapter(
             child: Container(
+              height: 2, // Divider height
+              color: Colors.grey, // Divider color
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -124,13 +142,19 @@ class _HomeViewState extends State<HomeView> {
                   Text(
                     "Available Books",
                     style: TextStyle(
-                      color: Colors.cyan.shade50,
+                      color: Colors.greenAccent[400],
                       fontSize: 25,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 2, // Divider height
+              color: Colors.grey, // Divider color
             ),
           ),
           StreamBuilder<QuerySnapshot>(

@@ -176,17 +176,23 @@ class _ProfilepageState extends State<Profilepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue[100],
+      backgroundColor: Colors.blue[700],
       appBar: AppBar(
         title: Text(
           "My Profile",
           style: TextStyle(
             fontWeight: FontWeight.w900,
             fontSize: 26,
+            color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.indigo[900],
         centerTitle: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(100),
+          ),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -205,6 +211,9 @@ class _ProfilepageState extends State<Profilepage> {
             } else {
               return ListView(
                 children: [
+                  SizedBox(
+                    height: 20,
+                  ),
                   GestureDetector(
                     onTap: _pickImage,
                     child: Row(
@@ -214,8 +223,8 @@ class _ProfilepageState extends State<Profilepage> {
                           alignment: Alignment.center,
                           children: [
                             Container(
-                              width: 120,
-                              height: 120,
+                              width: 150,
+                              height: 150,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: Colors.white,
@@ -250,7 +259,7 @@ class _ProfilepageState extends State<Profilepage> {
                                 child: Container(
                                   padding: EdgeInsets.all(4),
                                   decoration: BoxDecoration(
-                                    color: Colors.teal,
+                                    color: Colors.grey,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Icon(
@@ -266,28 +275,31 @@ class _ProfilepageState extends State<Profilepage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 15),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      "Signed in as:",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.purple[500],
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Signed in as: ",
+                          style: TextStyle(
+                            color: Colors.greenAccent[400],
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          currentuser.email!,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 8),
-                  Text(
-                    currentuser.email!,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black, fontSize: 16),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
                   TextBox(
                     text: _name,
                     sectionName: 'Name',

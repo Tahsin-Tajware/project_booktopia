@@ -14,10 +14,10 @@ class TextBox extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.black45,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(15),
       ),
-      padding: EdgeInsets.only(left: 15, right: 15,bottom: 15),
-      margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+      padding: EdgeInsets.only(left: 25, right: 25,bottom: 27),
+      margin: EdgeInsets.only(left: 15, right: 15, top: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

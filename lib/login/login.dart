@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/log4.png'),
+              image: AssetImage('assets/pro3.png'),
               fit: BoxFit.none,
               alignment: Alignment.topCenter,
             ),
@@ -49,13 +49,20 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 250),
+                SizedBox(height: 20,),
+                Image.asset(
+                  'assets/logo.png',
+                  width: 180,
+                  height: 180,
+                ),
+                SizedBox(height: 100),
                 Text(
                   "Welcome to booktopia! Sign in to continue...",
                   style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900),
+                    fontSize: 15,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
