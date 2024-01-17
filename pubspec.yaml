@@ -61,6 +61,9 @@ dependencies:
   image_cropper: ^5.0.1
   firebase_storage: ^11.6.0
   firebase_analytics: ^10.8.0
+  firebase_messaging: ^14.7.10
+  app_settings: ^5.1.1
+  flutter_local_notifications: ^16.3.0
 
 
 
