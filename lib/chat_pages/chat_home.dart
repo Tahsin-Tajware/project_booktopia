@@ -25,15 +25,21 @@ class _ChatHomeState extends State<ChatHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade400,
+        backgroundColor: Colors.indigo[800],
         title: Text(
-          "        Chat       ",
+          "Chat",
           style: TextStyle(
               fontSize: 28,
-              color: Colors.grey.shade800,
-              fontWeight: FontWeight.bold),
+              color: Colors.white,
+              fontWeight: FontWeight.w900),
           textAlign: TextAlign.end,
         ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        centerTitle: true,
         // backgroundColor: Colors.transparent,
       ),
       drawer: MyDrawer(),

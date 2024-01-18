@@ -53,7 +53,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 padding: const EdgeInsets.only(left: 25.0),
                 child: ListTile(
                   title: Text(
-                    "S E T T I N G S",
+                    "A p p e a r a n c e",
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w900,
