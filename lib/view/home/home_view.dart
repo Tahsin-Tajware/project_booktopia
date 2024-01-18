@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import '../../Notification.dart';
 import '../../book_details.dart';
 import '../main_tab/menubar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,9 +15,22 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  NotificationServices notificationServices = NotificationServices();
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.getDeviceToken().then((value) {
+      print('device token');
+      print(value);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var media = MediaQuery.of(context).size;
+    var media = MediaQuery
+        .of(context)
+        .size;
     return Scaffold(
       backgroundColor: Colors.blue.shade600,
       body: SingleChildScrollView(
@@ -36,7 +50,8 @@ class _HomeViewState extends State<HomeView> {
                       height: media.width,
                       decoration: BoxDecoration(
                         color: Colors.lightBlueAccent.shade400,
-                        borderRadius: BorderRadius.circular(media.width * 0.2),
+                        borderRadius: BorderRadius.circular(media.width *
+                            0.2),
                       ),
                     ),
                   ),
@@ -50,7 +65,8 @@ class _HomeViewState extends State<HomeView> {
                       height: media.width,
                       decoration: BoxDecoration(
                         color: Colors.lightBlueAccent.shade400,
-                        borderRadius: BorderRadius.circular(media.width * 0.5),
+                        borderRadius: BorderRadius.circular(media.width *
+                            0.5),
                       ),
                     ),
                   ),
@@ -115,74 +131,77 @@ class _HomeViewState extends State<HomeView> {
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index, realIndex) {
                                 DocumentSnapshot doc =
-                                    snapshot.data!.docs[index];
+                                snapshot.data!.docs[index];
 
                                 return GestureDetector(
                                     onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => BookDetails(
-                                        id: doc.id,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Column(
-                                  children: [
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              BookDetails(
+                                                id: doc.id,
+                                              ),
+                                        ),
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
 
-                                    Image.network(
-                                      doc.get('imageUrl'),
-                                      fit: BoxFit.contain,
-                                      cacheWidth:170,
-                                      cacheHeight:230,
-                                    ),
+                                        Image.network(
+                                          doc.get('imageUrl'),
+                                          fit: BoxFit.contain,
+                                          cacheWidth: 170,
+                                          cacheHeight: 230,
+                                        ),
 
-                                    SizedBox(height: 12),
+                                        SizedBox(height: 12),
 
-                                    Text(
-                                      doc.get('name'),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.brown.shade50,
-                                        fontWeight: FontWeight.w900,
-                                        textBaseline: TextBaseline.alphabetic,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(height: 4),
-                                    Text(
-                                      doc.get('author'),
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.cyan.shade50,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                    SizedBox(height: 4),
-                                    RatingBar.builder(
-                                      itemSize: 20,
-                                      initialRating:  double.parse(doc.get('rating')),
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                                      itemBuilder: (context, _) => Icon(
-                                        Icons.star_rounded,
-                                        color: Colors.amber[600],
-                                      ),
-                                      onRatingUpdate: (rating) {},
-                                    ),
+                                        Text(
+                                          doc.get('name'),
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.brown.shade50,
+                                            fontWeight: FontWeight.w900,
+                                            textBaseline: TextBaseline
+                                                .alphabetic,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(height: 4),
+                                        Text(
+                                          doc.get('author'),
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.cyan.shade50,
+                                            fontWeight: FontWeight.w900,
+                                          ),
+                                          textAlign: TextAlign.start,
+                                        ),
+                                        SizedBox(height: 4),
+                                        RatingBar.builder(
+                                          itemSize: 20,
+                                          initialRating: double.parse(
+                                              doc.get('rating')),
+                                          minRating: 1,
+                                          direction: Axis.horizontal,
+                                          allowHalfRating: true,
+                                          itemCount: 5,
+                                          itemPadding: EdgeInsets.symmetric(
+                                              horizontal: 2.0),
+                                          itemBuilder: (context, _) =>
+                                              Icon(
+                                                Icons.star_rounded,
+                                                color: Colors.amber[600],
+                                              ),
+                                          onRatingUpdate: (rating) {},
+                                        ),
 
-                                    SizedBox(height: 8),
-                                  ],
-                                )
+                                        SizedBox(height: 8),
+                                      ],
+                                    )
                                 );
                               },
-
-
                               options: CarouselOptions(
                                 height: 360,
                                 aspectRatio: 1,
@@ -191,11 +210,13 @@ class _HomeViewState extends State<HomeView> {
                                 enableInfiniteScroll: true,
                                 reverse: true,
                                 autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                                autoPlayAnimationDuration: Duration(
+                                    milliseconds: 800),
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 enlargeCenterPage: true,
                                 enlargeFactor: 0.4,
-                                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                                enlargeStrategy: CenterPageEnlargeStrategy
+                                    .zoom,
                                 scrollDirection: Axis.horizontal,
                               ),
                             ),
@@ -247,7 +268,8 @@ class _HomeViewState extends State<HomeView> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
-                              DocumentSnapshot doc = snapshot.data!.docs[index];
+                              DocumentSnapshot doc = snapshot.data!
+                                  .docs[index];
                               return BookItem(doc: doc);
                             },
                           );
