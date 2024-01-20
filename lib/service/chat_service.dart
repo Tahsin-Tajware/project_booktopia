@@ -7,7 +7,7 @@ class ChatService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   FirebaseAuth _auth = FirebaseAuth.instance;
   Stream<List<Map<String, dynamic>>> getUsersStream() {
-    return _firestore.collection("users").snapshots().map((snapshot) {
+    return _firestore.collection("Users").snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         final user = doc.data();
         return user;
@@ -17,7 +17,7 @@ class ChatService {
   Future<void> sendMessage(String receiverID,message) async{
     final String currentUserID = _auth.currentUser!.uid;
     final String currentUserEmail = _auth.currentUser!.email!;
-    final Timestamp timestamp = Timestamp .now();
+    final Timestamp timestamp = Timestamp.now();
     Message newMessage = Message(
       senderID: currentUserID,
       senderEmail: currentUserEmail,

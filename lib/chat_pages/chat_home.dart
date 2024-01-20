@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../elements/my_drawer.dart';
 import '../elements/user_tile.dart';
 import '../login/firebase_auth_services.dart';
-import '../login/login.dart';
-import '../view/main_tab/menubar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import '../login/login.dart';
+// import '../view/main_tab/menubar.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 import 'chat_page.dart';
 
@@ -36,13 +36,14 @@ class _ChatHomeState extends State<ChatHome> {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(20),
+            bottom: Radius.circular(25),
           ),
         ),
         centerTitle: true,
         // backgroundColor: Colors.transparent,
       ),
       drawer: MyDrawer(),
+
       body: _buildUserList(),
     );
   }

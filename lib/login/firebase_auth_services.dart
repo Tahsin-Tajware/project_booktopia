@@ -14,10 +14,18 @@ class FirebaseAuthServices {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      _firestore.collection("users").doc(credential.user!.uid).set(
+      // String uid = credential.user!.uid;
+      // await _firestore.collection("users").doc(uid).set({
+      //   'email': email,
+      //   'uid': uid,
+      //   'name': "", // Add more fields as needed
+      //   'address': "", // Add more fields as needed
+      //   'profile': "", // Add more fields as needed
+      // });
+      await _firestore.collection("Users").doc(credential.user!.uid).set(
         {
-          'uid': credential.user!.uid,
           'email': email,
+          'uid': credential.user!.uid,
         },
       );
       return credential.user;
@@ -32,12 +40,12 @@ class FirebaseAuthServices {
     try {
       UserCredential credential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      _firestore.collection("users").doc(credential.user!.uid).set(
-        {
-          'uid': credential.user!.uid,
-          'email': email,
-        },
-      );
+      // await _firestore.collection("users").doc(credential.user!.uid).set(
+      //   {
+      //     'email': email,
+      //     'uid': credential.user!.uid,
+      //   },
+      // );
       return credential.user;
     } catch (e) {
       print("Some error occurred");
