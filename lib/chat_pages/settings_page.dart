@@ -32,7 +32,7 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.tertiaryContainer,
           borderRadius: BorderRadius.circular(12),
         ),
         margin: const EdgeInsets.all(25),

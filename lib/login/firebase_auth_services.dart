@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthServices {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   User? getCurrentUser() {
     return _auth.currentUser;
@@ -14,6 +14,15 @@ class FirebaseAuthServices {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+
+      // await _firestore.collection("users").doc(credential.user!.uid).set({
+      //   'name': name,
+      //   'email': email,
+      //   'address': '',
+      //   'profile': profile,
+      //   'uid' : uid,
+      // });
+
       // String uid = credential.user!.uid;
       // await _firestore.collection("users").doc(uid).set({
       //   'email': email,
@@ -22,12 +31,14 @@ class FirebaseAuthServices {
       //   'address': "", // Add more fields as needed
       //   'profile': "", // Add more fields as needed
       // });
-      await _firestore.collection("Users").doc(credential.user!.uid).set(
-        {
-          'email': email,
-          'uid': credential.user!.uid,
-        },
-      );
+      // await _firestore.collection("Users")
+      //     .doc(credential.user!.uid)
+      //     .set(
+      //   {
+      //     'email': email,
+      //     'uid': credential.user!.uid,
+      //   },
+      // );
       return credential.user;
     } catch (e) {
       print("Some error occurred");

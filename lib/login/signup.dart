@@ -47,147 +47,149 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
-      body: Align(
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Enter a valid email and password.",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  FormContainerWidget(
-                    controller: _nameController,
-                    hintText: "Enter your name",
-                    isPasswordField: false,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  FormContainerWidget(
-                    controller: _emailController,
-                    hintText: "Enter your email",
-                    isPasswordField: false,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  FormContainerWidget(
-                    controller: _passwordController,
-                    hintText: "Enter password",
-                    isPasswordField: true,
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  FormContainerWidget(
-                    //controller: _passwordController,
-                    hintText: "Confirm password",
-                    isPasswordField: true,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  GestureDetector(
-                    onTap: _signUp,
-                    child: Container(
-                      width: double.infinity,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Sign Up to continue",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 21,
+      body: Container(
+        child: Align(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Enter a valid email and password.",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    FormContainerWidget(
+                      controller: _nameController,
+                      hintText: "Enter your name",
+                      isPasswordField: false,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FormContainerWidget(
+                      controller: _emailController,
+                      hintText: "Enter your email",
+                      isPasswordField: false,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FormContainerWidget(
+                      controller: _passwordController,
+                      hintText: "Enter password",
+                      isPasswordField: true,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FormContainerWidget(
+                      //controller: _passwordController,
+                      hintText: "Confirm password",
+                      isPasswordField: true,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      onTap: _signUp,
+                      child: Container(
+                        width: double.infinity,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Sign Up to continue",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 21,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Already have an account?",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginPage()));
-                        },
-                        child: Text(
-                          "Sign In",
-                          style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 22),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Already have an account?",
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  // GestureDetector(
-                  //   onTap: () {
-                  //     _signInWithGoogle();
-                  //   },
-                  //   child: Container(
-                  //     width: double.infinity,
-                  //     height: 45,
-                  //     decoration: BoxDecoration(
-                  //       color: Colors.white24,
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //     child: Center(
-                  //       child: Row(
-                  //         mainAxisAlignment: MainAxisAlignment.center,
-                  //         children: [
-                  //           Image.asset(
-                  //             'assets/google.png',
-                  //             height: 30,
-                  //           ),
-                  //           SizedBox(
-                  //             width: 5,
-                  //           ),
-                  //           Text(
-                  //             " Sign in with Google",
-                  //             style: TextStyle(
-                  //               color: Colors.white,
-                  //               fontWeight: FontWeight.bold,
-                  //               fontSize: 20,
-                  //             ),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                        SizedBox(
+                          width: 5,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()));
+                          },
+                          child: Text(
+                            "Sign In",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 22),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     _signInWithGoogle();
+                    //   },
+                    //   child: Container(
+                    //     width: double.infinity,
+                    //     height: 45,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.white24,
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //     child: Center(
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.center,
+                    //         children: [
+                    //           Image.asset(
+                    //             'assets/google.png',
+                    //             height: 30,
+                    //           ),
+                    //           SizedBox(
+                    //             width: 5,
+                    //           ),
+                    //           Text(
+                    //             " Sign in with Google",
+                    //             style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: 20,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -208,6 +210,9 @@ class _SignUpPageState extends State<SignUpPage> {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
+      // await FirebaseAuthServices()
+      //     .signUpWithEmailAndPassword(email, password, name, profile);
+
       await FirebaseFirestore.instance
           .collection("users")
           .doc(userCredential.user!.email)
@@ -217,6 +222,15 @@ class _SignUpPageState extends State<SignUpPage> {
         'address': '',
         'profile': profile,
       });
+
+      await FirebaseFirestore.instance.collection("Users")
+          .doc(userCredential.user!.uid)
+          .set(
+        {
+          'email': email,
+          'uid': userCredential.user!.uid,
+        },
+      );
 
       Navigator.pushReplacement(
         context,
