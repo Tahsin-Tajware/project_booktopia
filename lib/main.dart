@@ -1,10 +1,11 @@
+
 import 'package:booktopia/firebase_options.dart';
+import 'package:booktopia/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'Notification.dart';
+import 'package:provider/provider.dart';
 import 'login/login.dart';
 import 'login/splash.dart';
 
@@ -17,11 +18,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  LocalNotificationService.initialize();
 
-
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -32,13 +35,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BookTopia',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          background: Colors.black,
-        ),
-        useMaterial3: true,
-      ),
+
+
+      theme: Provider.of<ThemeProvider>(context).themeData,
+
+      // ThemeData(
+      //   colorScheme: ColorScheme.fromSwatch().copyWith(
+      //     background: Colors.grey.shade200,
+      //   ),
+      //   useMaterial3: true,
+      // ),
       home: SafeArea(
+        bottom: true,
         child: SplashScreen(
           child: LoginPage(),
         ),

@@ -21,6 +21,7 @@ class _ProfilepageState extends State<Profilepage> {
   File? _imageFile;
   late Future<void> _userDataFuture;
 
+
   final currentuser = FirebaseAuth.instance.currentUser!;
   final userCollection = FirebaseFirestore.instance.collection("users");
   final _imagePicker = ImagePicker();
@@ -45,6 +46,7 @@ class _ProfilepageState extends State<Profilepage> {
           _name = userSnapshot.get('name') ?? "";
           _address = userSnapshot.get('address') ?? "";
           _profileImageURL = userSnapshot.get('profile') ?? "";
+
         });
       }
     }
@@ -323,7 +325,7 @@ class _ProfilepageState extends State<Profilepage> {
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
+                        backgroundColor: Colors.red,
                         padding:
                         EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                       ),
