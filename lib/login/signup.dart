@@ -47,6 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
+      backgroundColor: Colors.black,
       body: Container(
         child: Align(
           alignment: Alignment.center,
@@ -79,6 +80,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: _emailController,
                       hintText: "Enter your email",
                       isPasswordField: false,
+
                     ),
                     SizedBox(
                       height: 10,
@@ -129,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Text(
                           "Already have an account?",
                           style: TextStyle(
-                              color: Colors.lightBlue.shade600,
+                              color: Colors.green,
                               fontSize: 16,
                               fontWeight: FontWeight.bold),
                         ),
@@ -146,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: Text(
                             "Sign In",
                             style: TextStyle(
-                                color: Colors.blue,
+                                color: Colors.cyanAccent,
                                 fontWeight: FontWeight.w900,
                                 fontSize: 22),
                           ),
