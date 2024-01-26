@@ -11,10 +11,7 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  // void logout() {
-  //   final _auth = FirebaseAuthServices();
-  //   _auth.signOut();
-  // }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
