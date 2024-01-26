@@ -34,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.indigo.shade700,
         centerTitle: true,
         title: const Text(
           'Sign Up',
@@ -61,7 +61,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       "Enter a valid email and password.",
                       style: TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.lightBlue.shade400,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -128,7 +128,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       children: [
                         Text(
                           "Already have an account?",
-                          style: TextStyle(color: Colors.white, fontSize: 16),
+                          style: TextStyle(
+                              color: Colors.lightBlue.shade600,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
                           width: 5,
@@ -204,14 +207,9 @@ class _SignUpPageState extends State<SignUpPage> {
     String password = _passwordController.text;
     String profile = _profileController.text;
 
-
-
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
-
-      // await FirebaseAuthServices()
-      //     .signUpWithEmailAndPassword(email, password, name, profile);
 
       await FirebaseFirestore.instance
           .collection("users")
@@ -223,7 +221,8 @@ class _SignUpPageState extends State<SignUpPage> {
         'profile': profile,
       });
 
-      await FirebaseFirestore.instance.collection("Users")
+      await FirebaseFirestore.instance
+          .collection("Users")
           .doc(userCredential.user!.uid)
           .set(
         {
@@ -238,7 +237,6 @@ class _SignUpPageState extends State<SignUpPage> {
       );
     } catch (e) {
       print("Error signing up: $e");
-
     }
   }
 }
@@ -274,4 +272,3 @@ class _SignUpPageState extends State<SignUpPage> {
 //       // Handle Google Sign-In error if needed
 //     }
 //   }
-

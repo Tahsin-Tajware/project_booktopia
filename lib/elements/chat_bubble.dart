@@ -28,10 +28,10 @@ class ChatBubble extends StatelessWidget {
             : (isDarkMode
                 ? Colors.grey.shade800
                 : Colors.purpleAccent.shade700),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(18),
       ),
       padding: const EdgeInsets.all(16.0),
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 26),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: Text(
         message,
         style: TextStyle(

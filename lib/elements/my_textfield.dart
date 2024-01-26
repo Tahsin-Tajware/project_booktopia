@@ -23,15 +23,15 @@ class MyTextField extends StatelessWidget {
         focusNode: focusNode,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade500),
+            borderSide: BorderSide(color: Colors.greenAccent.shade700),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade700),
+            borderSide: BorderSide(color: Colors.purpleAccent.shade700),
           ),
-          fillColor: Colors.white,
+          fillColor: Colors.black54,
           filled: true,
           hintText: hintText,
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.lightBlue.shade100),
         ),
       ),
     );

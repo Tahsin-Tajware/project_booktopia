@@ -71,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   hintText: "Enter Email..........",
                   isPasswordField: false,
+
                 ),
                 SizedBox(
                   height: 15,
