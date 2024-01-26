@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../Notification.dart';
 import '../../book_details.dart';
 import '../main_tab/menubar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,29 +14,15 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  NotificationServices notificationServices = NotificationServices();
-  @override
-  void initState() {
-    super.initState();
-    notificationServices.requestNotificationPermission();
-    notificationServices.getDeviceToken().then((value) {
-      print('device token');
-      print(value);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var media = MediaQuery
-        .of(context)
-        .size;
+    var media = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.blue.shade600,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -50,8 +35,7 @@ class _HomeViewState extends State<HomeView> {
                       height: media.width,
                       decoration: BoxDecoration(
                         color: Colors.lightBlueAccent.shade400,
-                        borderRadius: BorderRadius.circular(media.width *
-                            0.2),
+                        borderRadius: BorderRadius.circular(media.width * 0.2),
                       ),
                     ),
                   ),
@@ -65,8 +49,7 @@ class _HomeViewState extends State<HomeView> {
                       height: media.width,
                       decoration: BoxDecoration(
                         color: Colors.lightBlueAccent.shade400,
-                        borderRadius: BorderRadius.circular(media.width *
-                            0.5),
+                        borderRadius: BorderRadius.circular(media.width * 0.5),
                       ),
                     ),
                   ),
@@ -116,8 +99,9 @@ class _HomeViewState extends State<HomeView> {
                       ],
                     ),
 
-                    SizedBox(height: 23,),
-
+                    SizedBox(
+                      height: 23,
+                    ),
 
                     StreamBuilder<QuerySnapshot>(
                       stream: firestore
@@ -131,40 +115,36 @@ class _HomeViewState extends State<HomeView> {
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index, realIndex) {
                                 DocumentSnapshot doc =
-                                snapshot.data!.docs[index];
+                                    snapshot.data!.docs[index];
 
                                 return GestureDetector(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              BookDetails(
-                                                id: doc.id,
-                                              ),
+                                          builder: (context) => BookDetails(
+                                            id: doc.id,
+                                          ),
                                         ),
                                       );
                                     },
                                     child: Column(
                                       children: [
-
                                         Image.network(
                                           doc.get('imageUrl'),
                                           fit: BoxFit.contain,
                                           cacheWidth: 170,
                                           cacheHeight: 230,
                                         ),
-
                                         SizedBox(height: 12),
-
                                         Text(
                                           doc.get('name'),
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.brown.shade50,
                                             fontWeight: FontWeight.w900,
-                                            textBaseline: TextBaseline
-                                                .alphabetic,
+                                            textBaseline:
+                                                TextBaseline.alphabetic,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
@@ -181,26 +161,23 @@ class _HomeViewState extends State<HomeView> {
                                         SizedBox(height: 4),
                                         RatingBar.builder(
                                           itemSize: 20,
-                                          initialRating: double.parse(
-                                              doc.get('rating')),
+                                          initialRating:
+                                              double.parse(doc.get('rating')),
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
                                           itemCount: 5,
                                           itemPadding: EdgeInsets.symmetric(
                                               horizontal: 2.0),
-                                          itemBuilder: (context, _) =>
-                                              Icon(
-                                                Icons.star_rounded,
-                                                color: Colors.amber[600],
-                                              ),
+                                          itemBuilder: (context, _) => Icon(
+                                            Icons.star_rounded,
+                                            color: Colors.amber[600],
+                                          ),
                                           onRatingUpdate: (rating) {},
                                         ),
-
                                         SizedBox(height: 8),
                                       ],
-                                    )
-                                );
+                                    ));
                               },
                               options: CarouselOptions(
                                 height: 360,
@@ -209,14 +186,13 @@ class _HomeViewState extends State<HomeView> {
                                 autoPlay: true,
                                 enableInfiniteScroll: true,
                                 reverse: true,
-                                autoPlayInterval: Duration(seconds: 3),
-                                autoPlayAnimationDuration: Duration(
-                                    milliseconds: 800),
+                                autoPlayInterval: Duration(seconds: 4),
+                                autoPlayAnimationDuration:
+                                    Duration(milliseconds: 800),
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 enlargeCenterPage: true,
                                 enlargeFactor: 0.4,
-                                enlargeStrategy: CenterPageEnlargeStrategy
-                                    .zoom,
+                                enlargeStrategy: CenterPageEnlargeStrategy.zoom,
                                 scrollDirection: Axis.horizontal,
                               ),
                             ),
@@ -240,7 +216,7 @@ class _HomeViewState extends State<HomeView> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "------  Available Books  ------",
+                              "        Available Books        ",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 25,
@@ -268,9 +244,11 @@ class _HomeViewState extends State<HomeView> {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: snapshot.data!.docs.length,
                             itemBuilder: (context, index) {
-                              DocumentSnapshot doc = snapshot.data!
-                                  .docs[index];
-                              return BookItem(doc: doc);
+                              DocumentSnapshot doc = snapshot.data!.docs[index];
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: BookItem(doc: doc),
+                              );
                             },
                           );
                         } else if (snapshot.hasError) {
@@ -301,60 +279,7 @@ class BookItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        doc.get('name'),
-        style: TextStyle(
-          fontSize: 15,
-          color: Colors.brown.shade50,
-          fontWeight: FontWeight.w900,
-          textBaseline: TextBaseline.alphabetic,
-        ),
-        textAlign: TextAlign.start,
-      ),
-      subtitle: Text(
-        doc.get('author'),
-        style: TextStyle(
-          fontSize: 14,
-          color: Colors.cyan.shade50,
-          fontWeight: FontWeight.w900,
-        ),
-        textAlign: TextAlign.start,
-      ),
-      leading: Image.network(
-        doc.get('imageUrl'),
-        fit: BoxFit.contain,
-        cacheWidth: 260,
-        cacheHeight: 330,
-      ),
-      trailing: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            doc.get('rating').toString(),
-            style: TextStyle(
-              fontSize: 17,
-              color: Colors.cyan[100],
-              fontWeight: FontWeight.w900,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          RatingBar.builder(
-            itemSize: 20,
-            initialRating: double.parse(doc.get('rating')),
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: true,
-            itemCount: 5,
-            itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-            itemBuilder: (context, _) => Icon(
-              Icons.star_rounded,
-              color: Colors.amber[600],
-            ),
-            onRatingUpdate: (rating) {},
-          ),
-        ],
-      ),
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -365,6 +290,155 @@ class BookItem extends StatelessWidget {
           ),
         );
       },
+    child: Container(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Container(
+            width: 80,
+            height: 93,
+            child: Image.network(
+              doc.get('imageUrl'),
+              fit: BoxFit.contain,
+              cacheWidth: 260,
+              cacheHeight: 330,
+            ),
+          ),
+          SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  doc.get('name'),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.brown.shade50,
+                    fontWeight: FontWeight.w900,
+                    textBaseline: TextBaseline.alphabetic,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+                Text(
+                  doc.get('author'),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.cyan.shade50,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                doc.get('rating').toString(),
+                style: TextStyle(
+                  fontSize: 17,
+                  color: Colors.cyan[100],
+                  fontWeight: FontWeight.w900,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              RatingBar.builder(
+                itemSize: 20,
+                initialRating: double.parse(doc.get('rating')),
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                itemBuilder: (context, _) => Icon(
+                  Icons.star_rounded,
+                  color: Colors.amber[600],
+                ),
+                onRatingUpdate: (rating) {},
+              ),
+            ],
+          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) => BookDetails(
+          //           id: doc.id,
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+        ],
+      ),
+    ),
     );
   }
 }
+// return ListTile(
+//   title: Text(
+//     doc.get('name'),
+//     style: TextStyle(
+//       fontSize: 15,
+//       color: Colors.brown.shade50,
+//       fontWeight: FontWeight.w900,
+//       textBaseline: TextBaseline.alphabetic,
+//     ),
+//     textAlign: TextAlign.start,
+//   ),
+//   subtitle: Text(
+//     doc.get('author'),
+//     style: TextStyle(
+//       fontSize: 14,
+//       color: Colors.cyan.shade50,
+//       fontWeight: FontWeight.w900,
+//     ),
+//     textAlign: TextAlign.start,
+//   ),
+//   leading: Image.network(
+//     doc.get('imageUrl'),
+//     fit: BoxFit.contain,
+//     cacheWidth: 260,
+//     cacheHeight: 330,
+//   ),
+//   trailing: Column(
+//     crossAxisAlignment: CrossAxisAlignment.end,
+//     children: [
+//       Text(
+//         doc.get('rating').toString(),
+//         style: TextStyle(
+//           fontSize: 17,
+//           color: Colors.cyan[100],
+//           fontWeight: FontWeight.w900,
+//         ),
+//         textAlign: TextAlign.center,
+//       ),
+//       RatingBar.builder(
+//         itemSize: 20,
+//         initialRating: double.parse(doc.get('rating')),
+//         minRating: 1,
+//         direction: Axis.horizontal,
+//         allowHalfRating: true,
+//         itemCount: 5,
+//         itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+//         itemBuilder: (context, _) => Icon(
+//           Icons.star_rounded,
+//           color: Colors.amber[600],
+//         ),
+//         onRatingUpdate: (rating) {},
+//       ),
+//     ],
+//   ),
+//   onTap: () {
+//     Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => BookDetails(
+//           id: doc.id,
+//         ),
+//       ),
+//     );
+//   },
+// );
