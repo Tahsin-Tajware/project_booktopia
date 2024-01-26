@@ -3,6 +3,7 @@ import 'package:booktopia/view/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../chat_pages/chat_home.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 
@@ -123,6 +124,9 @@ class _MainTabViewState extends State<MainTabView>
                           } else if (index == 1) {
                             _navigateTo(3); // Navigate to Profilepage
                           }
+                          else if (index == 4) {
+                            _navigateTo(4); // Navigate to Profilepage
+                          }
                           Navigator.pop(context);
                         },
                         child: Row(
@@ -192,6 +196,7 @@ class _MainTabViewState extends State<MainTabView>
           SearchPage(),
           Container(color: Colors.green),
           Profilepage(),
+          ChatHome(),
         ],
       ),
       bottomNavigationBar: Container(
