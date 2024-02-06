@@ -1,8 +1,10 @@
+import 'package:booktopia/notificationservice/local_notification_service.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import '../../book_details.dart';
-import '../main_tab/menubar.dart';
+import 'package:booktopia/book_details.dart';
+import 'package:booktopia/view/main_tab/menubar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -14,6 +16,58 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+      (message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
+        }
+      },
+    );
+
+    // 2. This method only call when App in forground it mean app must be opened
+    FirebaseMessaging.onMessage.listen(
+      (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+          LocalNotificationService.createanddisplaynotification(message);
+        }
+      },
+    );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+    FirebaseMessaging.onMessageOpenedApp.listen(
+      (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
@@ -290,90 +344,90 @@ class BookItem extends StatelessWidget {
           ),
         );
       },
-    child: Container(
-      width: double.infinity,
-      child: Row(
-        children: [
-          Container(
-            width: 80,
-            height: 93,
-            child: Image.network(
-              doc.get('imageUrl'),
-              fit: BoxFit.contain,
-              cacheWidth: 260,
-              cacheHeight: 330,
+      child: Container(
+        width: double.infinity,
+        child: Row(
+          children: [
+            Container(
+              width: 80,
+              height: 93,
+              child: Image.network(
+                doc.get('imageUrl'),
+                fit: BoxFit.contain,
+                cacheWidth: 260,
+                cacheHeight: 330,
+              ),
             ),
-          ),
-          SizedBox(width: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            SizedBox(width: 20),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    doc.get('name'),
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.brown.shade50,
+                      fontWeight: FontWeight.w900,
+                      textBaseline: TextBaseline.alphabetic,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                  Text(
+                    doc.get('author'),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.cyan.shade50,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  doc.get('name'),
+                  doc.get('rating').toString(),
                   style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.brown.shade50,
+                    fontSize: 17,
+                    color: Colors.cyan[100],
                     fontWeight: FontWeight.w900,
-                    textBaseline: TextBaseline.alphabetic,
                   ),
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.center,
                 ),
-                Text(
-                  doc.get('author'),
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.cyan.shade50,
-                    fontWeight: FontWeight.w900,
+                RatingBar.builder(
+                  itemSize: 20,
+                  initialRating: double.parse(doc.get('rating')),
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star_rounded,
+                    color: Colors.amber[600],
                   ),
-                  textAlign: TextAlign.start,
+                  onRatingUpdate: (rating) {},
                 ),
               ],
             ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                doc.get('rating').toString(),
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.cyan[100],
-                  fontWeight: FontWeight.w900,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              RatingBar.builder(
-                itemSize: 20,
-                initialRating: double.parse(doc.get('rating')),
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                itemBuilder: (context, _) => Icon(
-                  Icons.star_rounded,
-                  color: Colors.amber[600],
-                ),
-                onRatingUpdate: (rating) {},
-              ),
-            ],
-          ),
-          // GestureDetector(
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //         builder: (context) => BookDetails(
-          //           id: doc.id,
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
-        ],
+            // GestureDetector(
+            //   onTap: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => BookDetails(
+            //           id: doc.id,
+            //         ),
+            //       ),
+            //     );
+            //   },
+            // ),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
