@@ -1,10 +1,10 @@
-
 import 'package:booktopia/firebase_options.dart';
 import 'package:booktopia/themes/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'login/login.dart';
 import 'login/splash.dart';
@@ -18,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Stripe.publishableKey= 'pk_test_51Oh58EE28ucdGj6qJNCVgHFy4penKfyjj39LcuKK0jMGBw42B8vdX2zYPeoD6zz3io9ghPOCo4Y44dxCKpvg0NwL00i4JI7CiF';
 
   runApp(
     ChangeNotifierProvider(

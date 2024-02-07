@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'Payment.dart';
+
 class BookDetails extends StatelessWidget {
   final String id;
 
-  const BookDetails({Key? key, required this.id}) : super(key: key);
-
+  BookDetails({Key? key, required this.id}) : super(key: key);
+  var obj=paymentcontroller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +105,7 @@ class BookDetails extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () =>obj.makePayment(amount: '5', currency: 'US' ),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green),
                         icon: Icon(Icons.shopping_cart, color: Colors.white),
