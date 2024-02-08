@@ -48,18 +48,27 @@ class NotificationServices{
         initializationSetting,
         onDidReceiveNotificationResponse: (payload){
           // handle interaction when app is active for android
-          //handleMessage(context, message);
+          handleMessage(context, message);
         }
     );
   }
 
-  void firebaseInit(){
+  void firebaseInit(BuildContext context){
     FirebaseMessaging.onMessage.listen((message){
       if (kDebugMode) {
         print(message.notification!.title.toString());
         print(message.notification!.body.toString());
+        print(message.data.toString());
+        print(message.data['type']);
+        print(message.data['id']);
       }
-      showNotification(message);
+      if(Platfrom.isAndroid){
+        initLocalNotifications(context , message);
+        showNotification(message);
+      }
+      else {
+        showNotification(message);
+      }
 
     });
   }
@@ -120,8 +129,7 @@ class NotificationServices{
 
   Future<void> setupInteractMessage(BuildContext context) async {
     // when app is terminated
-    RemoteMessage? initialMessage =
-    await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       handleMessage(context, initialMessage);
@@ -145,3 +153,4 @@ class NotificationServices{
   }
 
 }
+
