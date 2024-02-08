@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'buy_now.dart';
+import 'cart.dart';
 
 class BookDetails extends StatelessWidget {
   final String id;
@@ -159,6 +160,30 @@ class BookDetails extends StatelessWidget {
                       icon: Icon(Icons.arrow_back, color: Colors.white),
                       label: Text(
                         'Go Back',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 14),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CartPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepOrange,
+                      ),
+                      icon: Icon(Icons.add_shopping_cart_outlined, color: Colors.white),
+                      label: Text(
+                        'Cart Details',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.white,

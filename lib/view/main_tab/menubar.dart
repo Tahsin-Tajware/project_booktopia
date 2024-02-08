@@ -126,10 +126,10 @@ class _MainTabViewState extends State<MainTabView>
                             _navigateTo(3); // Navigate to Profilepage
                           }
                           else if (index == 3) {
-                            _navigateTo(4); // Navigate to CartPage
+                            _navigateTo(2); // Navigate to CartPage
                           }
                           else if (index == 4) {
-                            _navigateTo(5); // Navigate to ChatHome
+                            _navigateTo(4); // Navigate to ChatHome
                           }
                           Navigator.pop(context);
                         },
@@ -198,9 +198,9 @@ class _MainTabViewState extends State<MainTabView>
         children: [
           const HomeView(),
           SearchPage(),
-          Container(color: Colors.green),
-          Profilepage(),
           CartPage(),
+          Profilepage(),
+          //CartPage(),
           ChatHome(),
         ],
       ),
