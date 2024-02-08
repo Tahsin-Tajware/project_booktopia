@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'buy_now.dart';
 
 class BookDetails extends StatelessWidget {
   final String id;
@@ -117,7 +119,9 @@ class BookDetails extends StatelessWidget {
                         ),
                       ),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          _addToCart(context, bookData);
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.orange[900],
                         ),
@@ -186,7 +190,7 @@ class BookDetails extends StatelessWidget {
             .get();
 
         if (!featuredSnapshot.exists) {
-          return {}; // Book not found
+          return {};
         } else {
           return featuredSnapshot.data() as Map<String, dynamic>;
         }
@@ -196,6 +200,37 @@ class BookDetails extends StatelessWidget {
     } catch (e) {
       print('Error fetching book details: $e');
       throw Exception('Error fetching book details');
+    }
+  }
+
+  void _addToCart(BuildContext context, Map<String, dynamic> bookData) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        String userEmail = user.email!;
+
+        await FirebaseFirestore.instance
+            .collection('carts')
+            .doc(userEmail)
+            .collection('items')
+            .add({
+          'product_name': bookData['name'],
+          'product_image': bookData['imageUrl'],
+          'product_price': bookData['price'],
+          'product_description': bookData['description'],
+          'quantity': 1, // Set default quantity, you can change it as needed
+          'total_amount': bookData['price'],
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Added to Cart'),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error adding to cart: $e');
     }
   }
 }
