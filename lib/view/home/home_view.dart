@@ -1,11 +1,12 @@
-import 'package:booktopia/notificationservice/local_notification_service.dart';
+import 'package:booktopia/notification_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:booktopia/book_details.dart';
 import 'package:booktopia/view/main_tab/menubar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../notification_sevicees.dart';
 
 final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -16,62 +17,29 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+
+  NotificationServices notificationServices = NotificationServices();
+
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit();
+    notificationServices.isTokenRefresh();
 
-    // 1. This method call when app in terminated state and you get a notification
-    // when you click on notification app open from terminated state and you can get notification data in this method
+    notificationServices.getDeviceToken().then((value){
+      print('device token');
+      print(value);
 
-    FirebaseMessaging.instance.getInitialMessage().then(
-      (message) {
-        print("FirebaseMessaging.instance.getInitialMessage");
-        if (message != null) {
-          print("New Notification");
-          // if (message.data['_id'] != null) {
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (context) => DemoScreen(
-          //         id: message.data['_id'],
-          //       ),
-          //     ),
-          //   );
-          // }
-        }
-      },
-    );
-
-    // 2. This method only call when App in forground it mean app must be opened
-    FirebaseMessaging.onMessage.listen(
-      (message) {
-        print("FirebaseMessaging.onMessage.listen");
-        if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          print("message.data11 ${message.data}");
-          LocalNotificationService.createanddisplaynotification(message);
-        }
-      },
-    );
-
-    // 3. This method only call when App in background and not terminated(not closed)
-    FirebaseMessaging.onMessageOpenedApp.listen(
-      (message) {
-        print("FirebaseMessaging.onMessageOpenedApp.listen");
-        if (message.notification != null) {
-          print(message.notification!.title);
-          print(message.notification!.body);
-          print("message.data22 ${message.data['_id']}");
-        }
-      },
-    );
+    });
   }
-
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
+
       backgroundColor: Colors.blue.shade600,
       body: SingleChildScrollView(
         child: Column(
@@ -169,7 +137,7 @@ class _HomeViewState extends State<HomeView> {
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index, realIndex) {
                                 DocumentSnapshot doc =
-                                    snapshot.data!.docs[index];
+                                snapshot.data!.docs[index];
 
                                 return GestureDetector(
                                     onTap: () {
@@ -198,7 +166,7 @@ class _HomeViewState extends State<HomeView> {
                                             color: Colors.brown.shade50,
                                             fontWeight: FontWeight.w900,
                                             textBaseline:
-                                                TextBaseline.alphabetic,
+                                            TextBaseline.alphabetic,
                                           ),
                                           textAlign: TextAlign.center,
                                         ),
@@ -216,7 +184,7 @@ class _HomeViewState extends State<HomeView> {
                                         RatingBar.builder(
                                           itemSize: 20,
                                           initialRating:
-                                              double.parse(doc.get('rating')),
+                                          double.parse(doc.get('rating')),
                                           minRating: 1,
                                           direction: Axis.horizontal,
                                           allowHalfRating: true,
@@ -242,7 +210,7 @@ class _HomeViewState extends State<HomeView> {
                                 reverse: true,
                                 autoPlayInterval: Duration(seconds: 4),
                                 autoPlayAnimationDuration:
-                                    Duration(milliseconds: 800),
+                                Duration(milliseconds: 800),
                                 autoPlayCurve: Curves.fastOutSlowIn,
                                 enlargeCenterPage: true,
                                 enlargeFactor: 0.4,

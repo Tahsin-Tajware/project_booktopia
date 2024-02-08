@@ -1,14 +1,15 @@
 import 'package:booktopia/common/color_extension.dart';
 import 'package:booktopia/view/home/home_view.dart';
+import 'package:booktopia/widget/settings_title.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../../chat_pages/chat_home.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-
-import '../../profile/profilepage.dart';
-import '../../search_view.dart';
+//import 'package:booktopia/widget/settings_title.dart';
+import 'package:booktopia/profile/profilepage.dart';
+import 'package:booktopia/search_view.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({Key? key}) : super(key: key);
@@ -123,8 +124,7 @@ class _MainTabViewState extends State<MainTabView>
                             _navigateTo(0);
                           } else if (index == 1) {
                             _navigateTo(3); // Navigate to Profilepage
-                          }
-                          else if (index == 4) {
+                          } else if (index == 4) {
                             _navigateTo(4); // Navigate to Profilepage
                           }
                           Navigator.pop(context);
@@ -197,6 +197,7 @@ class _MainTabViewState extends State<MainTabView>
           Container(color: Colors.green),
           Profilepage(),
           ChatHome(),
+          // Settings(),
         ],
       ),
       bottomNavigationBar: Container(
