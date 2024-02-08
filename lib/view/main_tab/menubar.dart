@@ -3,6 +3,7 @@ import 'package:booktopia/view/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../../cart.dart';
 import '../../chat_pages/chat_home.dart';
 import '../../login/login.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
@@ -37,7 +38,7 @@ class _MainTabViewState extends State<MainTabView>
     {"name": "Home", "icon": Icons.home},
     {"name": "My Account ", "icon": Icons.person},
     {"name": "Notification", "icon": Icons.notifications},
-    {"name": "Setting", "icon": Icons.settings},
+    {"name": "Cart", "icon": Icons.shopping_cart_sharp},
     {"name": "Chat", "icon": Icons.chat},
     {"name": "My Order", "icon": Icons.payment},
   ];
@@ -124,8 +125,11 @@ class _MainTabViewState extends State<MainTabView>
                           } else if (index == 1) {
                             _navigateTo(3); // Navigate to Profilepage
                           }
+                          else if (index == 3) {
+                            _navigateTo(4); // Navigate to CartPage
+                          }
                           else if (index == 4) {
-                            _navigateTo(4); // Navigate to Profilepage
+                            _navigateTo(5); // Navigate to ChatHome
                           }
                           Navigator.pop(context);
                         },
@@ -196,6 +200,7 @@ class _MainTabViewState extends State<MainTabView>
           SearchPage(),
           Container(color: Colors.green),
           Profilepage(),
+          CartPage(),
           ChatHome(),
         ],
       ),
